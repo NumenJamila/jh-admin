@@ -24,7 +24,7 @@ module.exports = {
   // sub-path here. For example, if your app is deployed at
   // https://www.foobar.com/my-app/
   // then change this to '/my-app/'
-  baseUrl: BASE_URL,
+  publicPath: BASE_URL,
   // tweak internal webpack configuration.
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   // 如果你不需要使用eslint，把lintOnSave设为false即可
@@ -35,9 +35,23 @@ module.exports = {
       .set('_c', resolve('src/components'))
   },
   // 设为false打包时不生成.map文件
-  productionSourceMap: false
-  // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
-  // devServer: {
-  //   proxy: 'localhost:3000'
-  // }
+  productionSourceMap: false,
+  // 这里写你调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的publicPath要写为 '' ，即空字符串
+  devServer: {
+    historyApiFallback: true,
+    hot: true,
+    inline: true,
+    stats: { colors: true },
+    proxy: {
+      // 匹配代理的url
+      '/api': {
+      // 目标服务器地址
+        target: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin',
+        secure: false,
+        // 路径重写
+        pathRewrite: { '^/api': '' },
+        changeOrigin: true
+      }
+    }
+  }
 }

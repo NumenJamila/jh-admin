@@ -13,13 +13,13 @@ const addErrorLog = errorInfo => {
 }
 
 class HttpRequest {
-  constructor (baseUrl = baseURL) {
-    this.baseUrl = baseUrl
+  constructor (publicPath = baseURL) {
+    this.publicPath = publicPath
     this.queue = {}
   }
   getInsideConfig () {
     const config = {
-      baseURL: this.baseUrl,
+      baseURL: this.publicPath,
       headers: {
         //
       }
