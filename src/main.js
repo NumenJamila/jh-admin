@@ -8,13 +8,16 @@ import iView from 'iview'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
-import { directive as clickOutside } from 'v-click-outside-x'
+import {
+  directive as clickOutside
+} from 'v-click-outside-x'
 import installPlugin from '@/plugin'
 import './index.less'
 import '@/assets/icons/iconfont.css'
 import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
+
 // 实际打包时应该不引入mock，用测试环境测试时也需注释mock
 /* eslint-disable */
 if (process.env.NODE_ENV !== 'production') require('@/mock')
@@ -41,6 +44,43 @@ Vue.prototype.$config = config
  */
 importDirective(Vue)
 Vue.directive('clickOutside', clickOutside)
+
+import axios from '@/libs/api.request'
+router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start()
+  setTimeout(function () {
+    axios.request({
+      url: '/hzy/auth/setMenu',
+      method: 'post'
+    }).then(function (res) {
+      if (!res.data.isSuccess && to.name !== "login") {
+        // 未登录且要跳转的页面不是登录页
+        next({
+          name: "login" // 跳转到登录页
+        })
+      } else if (!res.data.isSuccess && to.name === "login") {
+        // 未登陆且要跳转的页面是登录页
+        next() // 跳转
+      } else if (res.data.isSuccess && to.name === "login") {
+        // 已登录且要跳转的页面是登录页
+        next({
+          name: config.homeName // 跳转到homeName页
+        })
+      } else {
+        var userInfo = {
+          user: res.data.userInfo,
+          menuList: res.data.menuList,
+          // menuList: menu,
+          oprKeyList: res.data.codeList
+        }
+
+        store.dispatch('setUserInfo', userInfo)
+        next()
+      }
+    })
+  }, 500)
+})
+
 
 /* eslint-disable no-new */
 new Vue({

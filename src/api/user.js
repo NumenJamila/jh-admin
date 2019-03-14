@@ -1,28 +1,29 @@
 import axios from '@/libs/api.request'
 
-export const login = ({ userName, password }) => {
+export const login = ({ name, password }) => {
   const data = {
-    userName,
+    name,
     password
   }
   return axios.request({
-    url: 'login',
+    url: '/hzy/auth/login',
     data,
     method: 'post'
   })
 }
 
-export const getUserInfo = (token) => {
+export const loginByAccessToken = (token) => {
+  const data = {
+    token
+  }
   return axios.request({
-    url: 'get_info',
-    params: {
-      token
-    },
-    method: 'get'
+    url: '/hzy/auth/loginByAccessToken',
+    data,
+    method: 'post'
   })
 }
 
-export const logout = (token) => {
+export const logout = () => {
   return axios.request({
     url: 'logout',
     method: 'post'

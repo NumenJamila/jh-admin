@@ -1,5 +1,5 @@
 <style lang="less">
-  @import './login.less';
+@import "./login.less";
 </style>
 
 <template>
@@ -23,23 +23,48 @@ export default {
     LoginForm
   },
   methods: {
-    ...mapActions([
-      'handleLogin',
-      'getUserInfo'
-    ]),
-    handleSubmit ({ userName, password }) {
-      this.handleLogin({ userName, password }).then(res => {
-        this.getUserInfo().then(res => {
-          this.$router.push({
-            name: this.$config.homeName
+    ...mapActions(['handleLogin', 'loginByAccessToken']),
+    handleSubmit ({ name, password }) {
+      this.handleLogin({ name, password }).then(res => {
+        if (res.data.isSuccess) {
+          this.loginByAccessToken(res.data.data).then(resp => {
+            this.$router.push({
+              name: this.$config.homeName
+            })
           })
-        })
+        }
       })
     }
   }
+  //   handleSubmit({ name, password }) {
+  //     var that = this;
+  //     name = name.trim();
+  //     login({
+  //       name,
+  //       password
+  //     })
+  //       .then(res => {
+  //         if (res.data.isSuccess) {
+  //           loginByAccessToken(res.data.data)
+  //             .then(resp => {
+  //               if (resp.data.isSuccess) {
+  //                 that.$router.push({
+  //                   path: "/home"
+  //                 });
+  //               }
+  //             })
+  //             .catch(err => {
+  //               console.log(err);
+  //             });
+  //         }
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //   }
+  // }
 }
 </script>
 
 <style>
-
 </style>

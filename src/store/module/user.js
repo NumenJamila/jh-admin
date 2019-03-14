@@ -1,7 +1,7 @@
 import {
   login,
   logout,
-  getUserInfo,
+  loginByAccessToken,
   getMessage,
   getContentByMsgId,
   hasRead,
@@ -13,7 +13,7 @@ import { setToken, getToken } from '@/libs/util'
 
 export default {
   state: {
-    userName: '',
+    name: '',
     userId: '',
     avatarImgPath: '',
     token: getToken(),
@@ -33,7 +33,7 @@ export default {
       state.userId = id
     },
     setUserName (state, name) {
-      state.userName = name
+      state.name = name
     },
     setAccess (state, access) {
       state.access = access
@@ -74,16 +74,16 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
-      userName = userName.trim()
+    handleLogin ({ commit }, { name, password }) {
+      name = name.trim()
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          name,
           password
         }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
-          resolve()
+          // const data = res.data.data
+          // commit('setToken', data)
+          resolve(res)
         }).catch(err => {
           reject(err)
         })
@@ -93,8 +93,8 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
+          // commit('setToken', '')
+          // commit('setAccess', [])
           resolve()
         }).catch(err => {
           reject(err)
@@ -106,17 +106,17 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
+    loginByAccessToken ({ commit }, token) {
       return new Promise((resolve, reject) => {
         try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvatar', data.avatar)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
+          loginByAccessToken(token).then(res => {
+            // const data = res.data
+            // commit('setAvatar', data.avatar)
+            // commit('setUserName', data.name)
+            // commit('setUserId', data.user_id)
+            // commit('setAccess', data.access)
+            // commit('setHasGetInfo', true)
+            resolve(res)
           }).catch(err => {
             reject(err)
           })

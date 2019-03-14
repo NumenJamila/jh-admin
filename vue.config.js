@@ -46,7 +46,7 @@ module.exports = {
       // 匹配代理的url
       '/api': {
       // 目标服务器地址
-        target: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin',
+        target: 'http://192.168.1.117:8089',
         secure: false,
         // 路径重写
         pathRewrite: { '^/api': '' },
