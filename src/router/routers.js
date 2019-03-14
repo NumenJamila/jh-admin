@@ -272,6 +272,15 @@ export default [
           title: '导出EXCEL'
         },
         component: () => import('@/view/excel/export-excel.vue')
+      },
+      {
+        path: 'excelList',
+        name: 'excelList',
+        meta: {
+          icon: 'md-download',
+          title: '可分页列表'
+        },
+        component: () => import('@/view/excel/excelList.vue')
       }
     ]
   },
