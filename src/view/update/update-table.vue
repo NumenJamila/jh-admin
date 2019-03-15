@@ -2,7 +2,7 @@
   <Row :gutter="10">
     <i-col span="6">
       <Card>
-        <Upload action="" :before-upload="beforeUpload">
+        <Upload v-if="jurisdiction['home:test2:list']" action="" :before-upload="beforeUpload">
           <Button icon="ios-cloud-upload-outline">上传Csv文件</Button>
           &nbsp;&nbsp;&nbsp;&nbsp;点击上传Csv文件
         </Upload>
@@ -19,7 +19,13 @@
 
 <script>
 import { getArrayFromFile, getTableDataFromArray } from '@/libs/util'
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters({
+      jurisdiction: 'jurisdiction'
+    })
+  },
   name: 'update_table_page',
   data () {
     return {
@@ -41,6 +47,9 @@ export default {
       })
       return false
     }
+  },
+  mounted () {
+    console.log(this.jurisdiction)
   }
 }
 </script>

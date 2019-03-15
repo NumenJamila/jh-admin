@@ -25,7 +25,7 @@ const mutations = {
     if (!data.isAdmin) {
       let o = {}
       for (var i in data.oprKeyList) {
-        o[i] = true
+        o[data.oprKeyList[i]] = true
       }
       state.jurisdictionList = o
       /// /console.log("权限:",state.jurisdictionList);

@@ -1,5 +1,36 @@
 import axios from '@/libs/api.request'
 
+export const getRoleData = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/hzy/role/list',
+    data,
+    method: 'post'
+  })
+}
+export const addRoleData = ({
+  roleName,
+  roleDesc,
+  enName
+}) => {
+  const data = {
+    roleName,
+    roleDesc,
+    enName
+  }
+  return axios.request({
+    url: '/hzy/role/add',
+    data,
+    method: 'post'
+  })
+}
+
 export const getTableData = () => {
   return axios.request({
     url: 'get_table_data',
