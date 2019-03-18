@@ -83,7 +83,7 @@ router.beforeEach((to, from, next) => {
 
 
 /* eslint-disable no-new */
-const app = new Vue({
+new Vue({
   el: '#app',
   router,
   i18n,

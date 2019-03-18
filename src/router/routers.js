@@ -281,6 +281,15 @@ export default [
           title: '可分页列表'
         },
         component: () => import('@/view/excel/excelList.vue')
+      },
+      {
+        path: 'menuList',
+        name: 'menuList',
+        meta: {
+          icon: 'md-download',
+          title: '菜单列表'
+        },
+        component: () => import('@/view/excel/menuList.vue')
       }
     ]
   },
