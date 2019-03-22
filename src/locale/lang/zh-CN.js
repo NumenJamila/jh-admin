@@ -23,7 +23,11 @@ export default {
   level_2_2: 'Level-2-2',
   level_2_2_1: 'Level-2-2-1',
   level_2_2_2: 'Level-2-2-2',
-  excel: 'Excel',
+  systemManagement: '系统管理',
+  roleManagement: '角色管理',
+  menuManagement: '菜单管理',
+  // job: '任务管理',
+  // permission: '权限管理',
   'upload-excel': '上传excel',
   'export-excel': '导出excel',
   tools_methods_page: '工具函数',
@@ -42,6 +46,5 @@ export default {
   tree_table_page: '树状表格',
   org_tree_page: '组织结构树',
   drag_drawer_page: '可拖动抽屉',
-  tree_select_page: '树状下拉选择器',
-  excelList: '可分页列表'
+  tree_select_page: '树状下拉选择器'
 }

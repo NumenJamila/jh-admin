@@ -46,13 +46,24 @@ importDirective(Vue)
 Vue.directive('clickOutside', clickOutside)
 
 import axios from '@/libs/api.request'
+import $ from 'jquery'
+//不需要校验登录的的页面
+const excludePage = ['login', 'error_500']
+
 router.beforeEach((to, from, next) => {
+  if ($.inArray(to.name, excludePage) < 0) {
+    toGetSetMenu(to, from, next)
+  } else {
+    next()
+  }
+})
+
+function toGetSetMenu(to, from, next) {
   iView.LoadingBar.start()
-  setTimeout(function () {
     axios.request({
       url: '/hzy/auth/setMenu',
       method: 'post'
-    }).then(function (res) {
+    }).then(res => {
       if (!res.data.isSuccess && to.name !== "login") {
         // 未登录且要跳转的页面不是登录页
         next({
@@ -77,10 +88,12 @@ router.beforeEach((to, from, next) => {
         store.dispatch('setUserInfo', userInfo)
         next()
       }
+    }).catch(res=>{
+      next({
+        name: "error_500" // 跳转到500
+      })
     })
-  }, 500)
-})
-
+}
 
 /* eslint-disable no-new */
 new Vue({

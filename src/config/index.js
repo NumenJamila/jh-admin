@@ -18,7 +18,7 @@ export default {
    */
   publicPath: {
     dev: '/api/',
-    pro: 'https://produce.com'
+    pro: 'http://192.168.1.210:80'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

@@ -2,10 +2,10 @@
   <div>
     <div v-if="searchable && searchPlace === 'top'" class="search-con search-con-top">
       <Select v-model="searchKey" class="search-col">
-        <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
+        <Option v-for="item in columns" v-if="item.key !== 'action'&&item.key !== 'index'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
       <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
+      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>搜索</Button>
     </div>
     <Table
       ref="tablesMain"
@@ -40,7 +40,7 @@
     </Table>
     <div v-if="searchable && searchPlace === 'bottom'" class="search-con search-con-top">
       <Select v-model="searchKey" class="search-col">
-        <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
+        <Option v-for="item in columns" v-if="item.key !== 'action' && item.key !== 'index'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
       <Input placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
       <Button class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
@@ -201,18 +201,22 @@ export default {
       this.insideColumns = columns.map((item, index) => {
         let res = item
         if (res.editable) res = this.suportEdit(res, index)
-        if (res.key === 'handle') res = this.surportHandle(res)
+        if (res.key === 'action' && res.key === 'index') res = this.surportHandle(res)
         return res
       })
     },
     setDefaultSearchKey () {
-      this.searchKey = this.columns[0].key !== 'handle' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
+      this.searchKey = this.columns[0].key !== 'action' && this.columns[0].key !== 'index' ? this.columns[0].key : (this.columns.length > 1 ? this.columns[1].key : '')
     },
     handleClear (e) {
       if (e.target.value === '') this.insideTableData = this.value
     },
     handleSearch () {
-      this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
+      try {
+        this.insideTableData = this.value.filter(item => item[this.searchKey].indexOf(this.searchValue) > -1)
+      } catch (err) {
+
+      }
     },
     handleTableData () {
       this.insideTableData = this.value.map((item, index) => {
@@ -275,3 +279,9 @@ export default {
   }
 }
 </script>
+<style>
+.ivu-table-cell {
+    padding: 0 5px !important;
+  }
+
+</style>

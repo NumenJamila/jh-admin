@@ -23,7 +23,7 @@ export default {
   level_2_2: 'Level-2-2',
   level_2_2_1: 'Level-2-2-1',
   level_2_2_2: 'Level-2-2-2',
-  excel: 'Excel',
+  systemManagement: 'systemManagement',
   'upload-excel': 'Upload Excel',
   'export-excel': 'Export Excel',
   tools_methods_page: 'Tools Methods',

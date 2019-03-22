@@ -17,5 +17,9 @@ module.exports = {
   },
   parserOptions: {
     parser: 'babel-eslint'
-  }
+  },
+  env: {  
+    // 添加 
+    jquery: true 
+    } 
 }

@@ -23,7 +23,7 @@ export default {
   level_2_2: 'Level-2-2',
   level_2_2_1: 'Level-2-2-1',
   level_2_2_2: 'Level-2-2-2',
-  excel: 'Excel',
+  systemManagement: '系统管理',
   'upload-excel': '上傳excel',
   'export-excel': '導出excel',
   tools_methods_page: '工具函數',

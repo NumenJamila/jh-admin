@@ -247,11 +247,11 @@ export default [
     ]
   },
   {
-    path: '/excel',
-    name: 'excel',
+    path: '/systemManagement',
+    name: 'systemManagement',
     meta: {
       icon: 'ios-stats',
-      title: 'EXCEL导入导出'
+      title: '系统管理'
     },
     component: Main,
     children: [
@@ -262,7 +262,7 @@ export default [
           icon: 'md-add',
           title: '导入EXCEL'
         },
-        component: () => import('@/view/excel/upload-excel.vue')
+        component: () => import('@/view/systemManagement/upload-excel.vue')
       },
       {
         path: 'export-excel',
@@ -271,25 +271,52 @@ export default [
           icon: 'md-download',
           title: '导出EXCEL'
         },
-        component: () => import('@/view/excel/export-excel.vue')
+        component: () => import('@/view/systemManagement/export-excel.vue')
       },
       {
-        path: 'excelList',
-        name: 'excelList',
+        path: 'roleManagement',
+        name: 'roleManagement',
         meta: {
           icon: 'md-download',
-          title: '可分页列表'
+          title: '角色管理'
         },
-        component: () => import('@/view/excel/excelList.vue')
+        component: () => import('@/view/systemManagement/roleManagement.vue')
       },
       {
-        path: 'menuList',
-        name: 'menuList',
+        path: 'menuManagement',
+        name: 'menuManagement',
         meta: {
           icon: 'md-download',
-          title: '菜单列表'
+          title: '菜单管理'
         },
-        component: () => import('@/view/excel/menuList.vue')
+        component: () => import('@/view/systemManagement/menuManagement.vue')
+      },
+      {
+        path: 'permission',
+        name: 'permission',
+        meta: {
+          icon: 'md-download',
+          title: '权限管理'
+        },
+        component: () => import('@/view/systemManagement/permission.vue')
+      },
+      {
+        path: 'job',
+        name: 'job',
+        meta: {
+          icon: 'md-download',
+          title: '任务管理'
+        },
+        component: () => import('@/view/systemManagement/job.vue')
+      },
+      {
+        path: 'userManagement',
+        name: 'userManagement',
+        meta: {
+          icon: 'md-download',
+          title: '用户管理'
+        },
+        component: () => import('@/view/systemManagement/userManagement.vue')
       }
     ]
   },

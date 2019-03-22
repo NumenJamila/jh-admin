@@ -25,7 +25,7 @@ export const loginByAccessToken = (token) => {
 
 export const logout = () => {
   return axios.request({
-    url: 'logout',
+    url: '/hzy/auth/logout',
     method: 'post'
   })
 }

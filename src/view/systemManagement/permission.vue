@@ -25,32 +25,23 @@
         ></Page>
       </div>
       <Button
-        v-if="jurisdiction['home:test2:list']"
+        v-if="jurisdiction['systemManagement:roleManagement:list']"
         class="search-btn loc"
         @click="newModalFunc"
         type="primary"
       >
-        <Icon type="search"/>新建一级菜单
+        <Icon type="search"/>新建权限
       </Button>
       <Modal v-model="newModal" :title="modalTitle" :loading="modelLoading">
         <Form :model="formItem" ref="formValidate" :label-width="80" :rules="rules">
           <FormItem label="名称" prop="name">
             <Input v-model="formItem.name" placeholder="Enter something..."></Input>
           </FormItem>
-          <FormItem label="描述" prop="menuDesc">
-            <Input v-model="formItem.menuDesc" placeholder="Enter something..."></Input>
+          <FormItem label="描述" prop="permissionDesc">
+            <Input v-model="formItem.permissionDesc" placeholder="Enter something..."></Input>
           </FormItem>
-          <FormItem label="菜单图标" prop="menuIcon">
-            <Input v-model="formItem.menuIcon" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="路由名称" prop="menuUrl">
-            <Input v-model="formItem.menuUrl" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="编码" prop="menuCode">
-            <Input v-model="formItem.menuCode" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="排序" prop="sort">
-            <Input v-model="formItem.sort" placeholder="Enter something..."></Input>
+          <FormItem label="编码" prop="permissionCode">
+            <Input v-model="formItem.permissionCode" placeholder="Enter something..."></Input>
           </FormItem>
         </Form>
         <div slot="footer">
@@ -65,10 +56,10 @@
 <script>
 import Tables from '_c/tables'
 import {
-  addMenuData,
-  deleteMenuData,
-  updateMenuData,
-  getMenuData
+  addPermissionData,
+  deletePermissionData,
+  updatePermissionData,
+  getPermissionData
 } from '@/api/data'
 import { mapGetters } from 'vuex'
 export default {
@@ -91,18 +82,13 @@ export default {
     }
     return {
       newModal: false,
-      modalTitle: '新建一级菜单',
+      modalTitle: '新建权限',
       modelLoading: true,
       formItem: {
         id: undefined,
         name: '',
-        menuDesc: '',
-        menuIcon: '',
-        menuCode: '',
-        menuUrl: '',
-        parentId: 0,
-        sort: '',
-        level: ''
+        permissionDesc: '',
+        permissionCode: ''
       },
 
       rules: {
@@ -111,7 +97,7 @@ export default {
           { min: 2, message: '角色中文名称不可少于2个字', trigger: 'blur' },
           { max: 20, message: '角色中文名称不可超过20个字', trigger: 'blur' }
         ],
-        menuDesc: [
+        permissionDesc: [
           {
             required: true,
             validator: isNotEmpty,
@@ -144,7 +130,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.addTwoMenu(params.row.id, params.row.level)
+                      this.addTwoPermission(params.row.id, params.row.level)
                     }
                   }
                 },
@@ -153,25 +139,44 @@ export default {
             ])
           }
         },
-        { title: '描述', key: 'menuDesc', align: 'center' },
-        { title: '菜单图标', key: 'menuIcon', align: 'center' },
-        { title: '编码', key: 'menuCode', align: 'center' },
-        { title: '路由名称', key: 'menuUrl', align: 'center' },
-        { title: '路由同级排序', key: 'sort', align: 'center', sortable: true },
-        { title: '父级名称', key: 'parentName', align: 'center', sortable: true },
-        { title: '路由级别', key: 'level', align: 'center', sortable: true },
+        { title: '描述', key: 'permissionDesc', align: 'center' },
+        { title: '权限编码', key: 'permissionCode', align: 'center' },
         {
-          title: 'Handle',
+          title: '操作',
           align: 'center',
           key: 'action',
           render: (h, params) => {
             return h('div', [
+              // h(
+              //   'Button',
+              //   {
+              //     props: {
+              //       type: 'primary',
+              //       size: 'small'
+              //     },
+              //     style: {
+              //       marginRight: '5px'
+              //     },
+              //     on: {
+              //       click: () => {
+              //         this.editBus(
+              //           params.row.id,
+              //           params.row.name,
+              //           params.row.permissionDesc,
+              //           params.row.permissionCode,
+              //         )
+              //       }
+              //     }
+              //   },
+              //   '修改'
+              // ),
               h(
                 'Button',
                 {
                   props: {
                     type: 'primary',
-                    size: 'small'
+                    size: 'small',
+                    icon: 'md-create'
                   },
                   style: {
                     marginRight: '5px'
@@ -180,20 +185,46 @@ export default {
                     click: () => {
                       this.editBus(
                         params.row.id,
-                        params.row.parentId,
                         params.row.name,
-                        params.row.menuDesc,
-                        params.row.menuIcon,
-                        params.row.menuUrl,
-                        params.row.menuCode,
-                        params.row.sort,
-                        params.row.level
+                        params.row.permissionDesc,
+                        params.row.permissionCode
                       )
                     }
                   }
                 },
                 '修改'
               ),
+              // h(
+              //   'Poptip',
+              //   {
+              //     props: {
+              //       confirm: true,
+              //       title: '您确定要删除这条数据吗?',
+              //       transfer: true
+              //     },
+              //     style: {
+              //       cursor: 'pointer'
+              //     },
+              //     attrs: {
+              //       title: '删除'
+              //     },
+              //     on: {
+              //       'on-ok': () => {
+              //         this.detelePermission(params.row.id)
+              //       }
+              //     }
+              //   },
+              //   [
+              //     h('Icon', {
+              //       props: {
+              //         title: '删除',
+              //         type: 'ios-trash',
+              //         color: 'red',
+              //         size: 24
+              //       }
+              //     })
+              //   ]
+              // )
               h(
                 'Poptip',
                 {
@@ -202,27 +233,27 @@ export default {
                     title: '您确定要删除这条数据吗?',
                     transfer: true
                   },
-                  style: {
-                    cursor: 'pointer'
-                  },
-                  attrs: {
-                    title: '删除'
-                  },
                   on: {
                     'on-ok': () => {
-                      this.deleteMune(params.row.id)
+                      this.detelePermission(params.row.id)
                     }
                   }
                 },
                 [
-                  h('Icon', {
-                    props: {
-                      title: '删除',
-                      type: 'ios-trash',
-                      color: 'red',
-                      size: 24
-                    }
-                  })
+                  h(
+                    'Button',
+                    {
+                      props: {
+                        type: 'primary',
+                        size: 'small',
+                        icon: 'ios-trash'
+                      },
+                      style: {
+                        marginRight: '5px'
+                      }
+                    },
+                    '移除'
+                  )
                 ]
               )
             ])
@@ -233,55 +264,34 @@ export default {
     }
   },
   methods: {
-    // 唤起新增二级菜单
-    addTwoMenu (id, level) {
-      if (level === 2) {
-        this.$Message.error('二级菜单无法添加子菜单')
-      } else {
-        this.formItem = {
-          id: undefined,
-          name: '',
-          menuDesc: '',
-          menuIcon: '',
-          menuCode: '',
-          menuUrl: '',
-          parentId: id,
-          sort: '',
-          level: 2
-        }
-        this.modalTitle = '新增二级菜单'
-        this.newModal = true
-      }
+    // 唤起新增权限
+    addTwoPermission (id) {
+      alert(id)
     },
     // 唤起新增角色对话框
     newModalFunc () {
-      this.modalTitle = '新增一级菜单'
+      this.modalTitle = '新增权限'
       this.newModal = true
     },
     // 唤起修改对话框
-    editBus (id, parentId, name, menuDesc, menuIcon, menuUrl, menuCode, sort, level) {
-      this.modalTitle = '修改一级菜单'
+    editBus (id, name, permissionDesc, permissionCode) {
+      this.modalTitle = '新增权限'
       this.formItem = {
         id: id,
         name: name,
-        menuDesc: menuDesc,
-        menuIcon: menuIcon,
-        menuCode: menuCode,
-        menuUrl: menuUrl,
-        parentId: parentId,
-        sort: sort,
-        level: level
+        permissionDesc: permissionDesc,
+        permissionCode: permissionCode
       }
       this.newModal = true
     },
-    // 删除菜单
-    deleteMune (id) {
-      deleteMenuData(id)
+    // 删除权限
+    detelePermission (id) {
+      deletePermissionData(id)
         .then(res => {
           this.loading = false
           if (res.data.isSuccess) {
-            this.$Message.info('已删除角色')
-            this.startToGetMenuList()
+            this.$Message.info('已删除权限')
+            this.startToGetPermissionList()
           } else {
             this.$Message.error('请求失败：' + res.data.msg)
           }
@@ -297,28 +307,28 @@ export default {
       this.$refs.formValidate.validate(valid => {
         if (valid) {
           if (!this.formItem.id || this.formItem.id === undefined) {
-            addMenuData(this.formItem)
+            addPermissionData(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
                   this.$Message.info('添加成功')
                   this.newModal = false
-                  this.startToGetMenuList()
+                  this.startToGetPermissionList()
                 } else {
-                  this.$Message.error('添加失败')
+                  this.$Message.error("请求失败:" + res.data.msg)
                 }
               })
               .catch(res => {
                 this.$Message.error('网络异常')
               })
           } else {
-            updateMenuData(this.formItem)
+            updatePermissionData(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
                   this.$Message.info('修改成功')
                   this.newModal = false
-                  this.startToGetMenuList()
+                  this.startToGetPermissionList()
                 } else {
-                  this.$Message.error('修改失败')
+                  this.$Message.error("请求失败:" + res.data.msg)
                 }
               })
               .catch(res => {
@@ -333,13 +343,8 @@ export default {
       this.formItem = {
         id: undefined,
         name: '',
-        menuDesc: '',
-        menuIcon: '',
-        menuCode: '',
-        menuUrl: '',
-        parentId: 0,
-        sort: '',
-        level: 1
+        permissionDesc: '',
+        permissionCode: ''
       }
       this.newModal = false
     },
@@ -356,14 +361,14 @@ export default {
         pageNo: pageNo,
         pageSize: this.pageSize
       }
-      getRoleData(data)
+      getPermissionData(data)
         .then(res => {
           this.loading = false
           if (res.data.isSuccess) {
             this.tableData = res.data.data.entities
             this.entityCount = res.data.data.entityCount
           } else {
-            this.$Message.error('请求失败')
+            this.$Message.error("请求失败:" + res.data.msg)
           }
         })
         .catch(err => {
@@ -372,16 +377,17 @@ export default {
           this.$Message.error('网络异常')
         })
     },
-    startToGetMenuList () {
+    startToGetPermissionList () {
       this.loading = true
       let data = {
         pageNo: this.pageNo,
         pageSize: this.pageSize
       }
-      getMenuData(data)
+      getPermissionData(data)
         .then(res => {
           this.loading = false
           if (res.data.isSuccess) {
+            console.log(res)
             this.tableData = res.data.data.entities
             this.entityCount = res.data.data.entityCount
           } else {
@@ -394,7 +400,7 @@ export default {
     }
   },
   mounted () {
-    this.startToGetMenuList()
+    this.startToGetPermissionList()
   }
 }
 </script>
