@@ -68,7 +68,7 @@ export default {
       jurisdiction: 'jurisdiction'
     })
   },
-  name: 'tables_page',
+  name: 'permission',
   components: {
     Tables
   },

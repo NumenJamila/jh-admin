@@ -29,7 +29,22 @@ export const logout = () => {
     method: 'post'
   })
 }
-
+export const getUserInfo = () => {
+  return axios.request({
+    url: '/hzy/user/getUserInfo',
+    method: 'get'
+  })
+}
+export const updateMyself = ({id, nickName, mobile, email, head}) => {
+  const data = {
+    id, nickName, mobile, email, head
+  }
+  return axios.request({
+    url: '/hzy/user/updateMyself',
+    data,
+    method: 'post'
+  })
+}
 export const getUnreadCount = () => {
   return axios.request({
     url: 'message/count',

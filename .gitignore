@@ -1,6 +1,14 @@
 .DS_Store
 node_modules
 /dist
+*/*.zip
+*.zip
+*.sh
+*/**/*.psd
+./dist/
+./dist/**
+*/dist/
+dist/
 
 package-lock.json
 

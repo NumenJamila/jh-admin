@@ -77,7 +77,7 @@ export default {
       jurisdiction: 'jurisdiction'
     })
   },
-  name: 'tables_page',
+  name: 'menuManagement',
   components: {
     Tables
   },

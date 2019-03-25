@@ -75,7 +75,7 @@ export default {
       jurisdiction: "jurisdiction"
     })
   },
-  name: "tables_page",
+  name: "roleManagement",
   components: {
     Tables,
     editRole
@@ -284,7 +284,8 @@ export default {
                         icon: "ios-trash"
                       },
                       style: {
-                        marginRight: "5px"
+                        // marginRight: "5px"
+                        display: (params.row.id == 1) ? 'none' : 'inline-block'
                       }
                     },
                     "移除"

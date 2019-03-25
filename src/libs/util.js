@@ -93,23 +93,23 @@ export const getRouteTitleHandled = (route) => {
   return router
 }
 
-// export const showTitle = (item, vm) => {
-//   let { title, __titleIsFunction__ } = item.meta
-//   if (!title) return
-//   if (useI18n) {
-//     if (title.includes('{{') && title.includes('}}') && useI18n) title = title.replace(/({{[\s\S]+?}})/, (m, str) => str.replace(/{{([\s\S]*)}}/, (m, _) => vm.$t(_.trim())))
-//     else if (__titleIsFunction__) title = item.meta.title
-//     else title = vm.$t(item.name)
-//   } else title = (item.meta && item.meta.title) || item.name
-//   return title
-// }
-// 去除国际化
 export const showTitle = (item, vm) => {
-  let { title } = item.meta
+  let { title, __titleIsFunction__ } = item.meta
   if (!title) return
-  title = (item.meta && item.meta.title) || item.name
+  if (useI18n) {
+    if (title.includes('{{') && title.includes('}}') && useI18n) title = title.replace(/({{[\s\S]+?}})/, (m, str) => str.replace(/{{([\s\S]*)}}/, (m, _) => vm.$t(_.trim())))
+    else if (__titleIsFunction__) title = item.meta.title
+    else title = vm.$t(item.name)
+  } else title = (item.meta && item.meta.title) || item.name
   return title
 }
+// 去除国际化
+// export const showTitle = (item, vm) => {
+//   let { title } = item.meta
+//   if (!title) return
+//   title = (item.meta && item.meta.title) || item.name
+//   return title
+// }
 
 /**
  * @description 本地存储和获取标签导航列表

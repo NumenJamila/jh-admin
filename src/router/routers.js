@@ -33,7 +33,7 @@ export default [
     redirect: '/home',
     component: Main,
     meta: {
-      hideInMenu: true,
+      // hideInMenu: true,
       notCache: true
     },
     children: [
@@ -41,7 +41,7 @@ export default [
         path: '/home',
         name: 'home',
         meta: {
-          hideInMenu: true,
+          // hideInMenu: true,
           title: '首页',
           notCache: true,
           icon: 'md-home'
@@ -317,6 +317,24 @@ export default [
           title: '用户管理'
         },
         component: () => import('@/view/systemManagement/userManagement.vue')
+      },
+      {
+        path: 'personal',
+        name: 'personal',
+        meta: {
+          icon: 'md-download',
+          title: '个人信息'
+        },
+        component: () => import('@/view/systemManagement/personal.vue')
+      },
+      {
+        path: 'upLoadFiles',
+        name: 'upLoadFiles',
+        meta: {
+          icon: 'md-download',
+          title: '文件上传'
+        },
+        component: () => import('@/view/systemManagement/upLoadFiles.vue')
       }
     ]
   },

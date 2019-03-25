@@ -1,6 +1,6 @@
 <template>
   <Layout style="height: 100%" class="main">
-    <Sider hide-trigger collapsible :width="200" :collapsed-width="50" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
+    <Sider hide-trigger collapsible :width="180" :collapsed-width="50" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
       <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
@@ -12,8 +12,8 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
-          <user :message-unread-count="unreadCount" :user-avatar="userAvatar"/>
-          <!-- <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/> -->
+          <user :message-unread-count="unreadCount" :nickName="userNickName" :user-avatar="userAvatar"/>
+          <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
@@ -80,7 +80,10 @@ export default {
       return this.$store.state.app.tagRouter
     },
     userAvatar () {
-      return this.$store.state.user.avatarImgPath
+      return this.$store.state.userInfoSync.userinfo.head
+    },
+    userNickName() {
+      return this.$store.state.userInfoSync.userinfo.nickName
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
@@ -189,3 +192,9 @@ export default {
   }
 }
 </script>
+<style>
+.ivu-layout-header {
+    height: 50px !important;
+    line-height: 50px !important;
+}
+</style>

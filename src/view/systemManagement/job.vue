@@ -232,7 +232,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    this.deleteMenu(params.row.id)
+                    this.deleteJob(params.row.id)
                   }
                 }
               },

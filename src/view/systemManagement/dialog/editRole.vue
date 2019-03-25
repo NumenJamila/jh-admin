@@ -89,10 +89,6 @@
         :operations="['取消','选择']"
         filterable
         @on-change="handleChange3">
-      >
-        <div :style="{float: 'right', margin: '5px'}">
-          <Button size="small" @click="reloadMockData">Refresh</Button>
-        </div>
       </Transfer>
     </Modal>
   </div>
@@ -425,9 +421,6 @@ export default {
     },
     render3(item) {
       return item.label + " - " + item.name;
-    },
-    reloadMockData() {
-      this.getOtherUsersListData()
     },
     newUserModalFunc() {
       let data = {
