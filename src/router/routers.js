@@ -17,8 +17,7 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-export default [
-  {
+export default [{
     path: '/login',
     name: 'login',
     meta: {
@@ -36,19 +35,17 @@ export default [
       // hideInMenu: true,
       notCache: true
     },
-    children: [
-      {
-        path: '/home',
-        name: 'home',
-        meta: {
-          // hideInMenu: true,
-          title: '首页',
-          notCache: true,
-          icon: 'md-home'
-        },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
+    children: [{
+      path: '/home',
+      name: 'home',
+      meta: {
+        // hideInMenu: true,
+        title: '首页',
+        notCache: true,
+        icon: 'md-home'
+      },
+      component: () => import('@/view/single-page/home')
+    }]
   },
   {
     path: '',
@@ -66,17 +63,15 @@ export default [
     meta: {
       hideInBread: true
     },
-    children: [
-      {
-        path: 'join_page',
-        name: 'join_page',
-        meta: {
-          icon: '_qq',
-          title: 'QQ群'
-        },
-        component: () => import('@/view/join-page.vue')
-      }
-    ]
+    children: [{
+      path: 'join_page',
+      name: 'join_page',
+      meta: {
+        icon: '_qq',
+        title: 'QQ群'
+      },
+      component: () => import('@/view/join-page.vue')
+    }]
   },
   {
     path: '/message',
@@ -86,17 +81,15 @@ export default [
       hideInBread: true,
       hideInMenu: true
     },
-    children: [
-      {
-        path: 'message_page',
-        name: 'message_page',
-        meta: {
-          icon: 'md-notifications',
-          title: '消息中心'
-        },
-        component: () => import('@/view/single-page/message/index.vue')
-      }
-    ]
+    children: [{
+      path: 'message_page',
+      name: 'message_page',
+      meta: {
+        icon: 'md-notifications',
+        title: '消息中心'
+      },
+      component: () => import('@/view/single-page/message/index.vue')
+    }]
   },
   {
     path: '/components',
@@ -106,8 +99,7 @@ export default [
       title: '组件'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'tree_select_page',
         name: 'tree_select_page',
         meta: {
@@ -225,8 +217,7 @@ export default [
       title: '数据上传'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'update_table_page',
         name: 'update_table_page',
         meta: {
@@ -250,12 +241,11 @@ export default [
     path: '/systemManagement',
     name: 'systemManagement',
     meta: {
-      icon: 'ios-stats',
+      icon: 'md-cog',
       title: '系统管理'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'upload-excel',
         name: 'upload-excel',
         meta: {
@@ -277,7 +267,7 @@ export default [
         path: 'roleManagement',
         name: 'roleManagement',
         meta: {
-          icon: 'md-download',
+          icon: 'ios-git-compare',
           title: '角色管理'
         },
         component: () => import('@/view/systemManagement/roleManagement.vue')
@@ -286,7 +276,7 @@ export default [
         path: 'menuManagement',
         name: 'menuManagement',
         meta: {
-          icon: 'md-download',
+          icon: 'md-menu',
           title: '菜单管理'
         },
         component: () => import('@/view/systemManagement/menuManagement.vue')
@@ -295,7 +285,7 @@ export default [
         path: 'permission',
         name: 'permission',
         meta: {
-          icon: 'md-download',
+          icon: 'ios-color-filter',
           title: '权限管理'
         },
         component: () => import('@/view/systemManagement/permission.vue')
@@ -304,7 +294,7 @@ export default [
         path: 'job',
         name: 'job',
         meta: {
-          icon: 'md-download',
+          icon: 'md-alarm',
           title: '任务管理'
         },
         component: () => import('@/view/systemManagement/job.vue')
@@ -313,7 +303,7 @@ export default [
         path: 'userManagement',
         name: 'userManagement',
         meta: {
-          icon: 'md-download',
+          icon: 'md-contacts',
           title: '用户管理'
         },
         component: () => import('@/view/systemManagement/userManagement.vue')
@@ -322,7 +312,7 @@ export default [
         path: 'personal',
         name: 'personal',
         meta: {
-          icon: 'md-download',
+          icon: 'md-person',
           title: '个人信息'
         },
         component: () => import('@/view/systemManagement/personal.vue')
@@ -331,7 +321,7 @@ export default [
         path: 'upLoadFiles',
         name: 'upLoadFiles',
         meta: {
-          icon: 'md-download',
+          icon: 'ios-cloud-upload-outline',
           title: '文件上传'
         },
         component: () => import('@/view/systemManagement/upLoadFiles.vue')
@@ -345,18 +335,16 @@ export default [
       hideInBread: true
     },
     component: Main,
-    children: [
-      {
-        path: 'tools_methods_page',
-        name: 'tools_methods_page',
-        meta: {
-          icon: 'ios-hammer',
-          title: '工具方法',
-          beforeCloseName: 'before_close_normal'
-        },
-        component: () => import('@/view/tools-methods/tools-methods.vue')
-      }
-    ]
+    children: [{
+      path: 'tools_methods_page',
+      name: 'tools_methods_page',
+      meta: {
+        icon: 'ios-hammer',
+        title: '工具方法',
+        beforeCloseName: 'before_close_normal'
+      },
+      component: () => import('@/view/tools-methods/tools-methods.vue')
+    }]
   },
   {
     path: '/i18n',
@@ -365,17 +353,15 @@ export default [
       hideInBread: true
     },
     component: Main,
-    children: [
-      {
-        path: 'i18n_page',
-        name: 'i18n_page',
-        meta: {
-          icon: 'md-planet',
-          title: 'i18n - {{ i18n_page }}'
-        },
-        component: () => import('@/view/i18n/i18n-page.vue')
-      }
-    ]
+    children: [{
+      path: 'i18n_page',
+      name: 'i18n_page',
+      meta: {
+        icon: 'md-planet',
+        title: 'i18n - {{ i18n_page }}'
+      },
+      component: () => import('@/view/i18n/i18n-page.vue')
+    }]
   },
   {
     path: '/error_store',
@@ -384,17 +370,15 @@ export default [
       hideInBread: true
     },
     component: Main,
-    children: [
-      {
-        path: 'error_store_page',
-        name: 'error_store_page',
-        meta: {
-          icon: 'ios-bug',
-          title: '错误收集'
-        },
-        component: () => import('@/view/error-store/error-store.vue')
-      }
-    ]
+    children: [{
+      path: 'error_store_page',
+      name: 'error_store_page',
+      meta: {
+        icon: 'ios-bug',
+        title: '错误收集'
+      },
+      component: () => import('@/view/error-store/error-store.vue')
+    }]
   },
   {
     path: '/error_logger',
@@ -404,17 +388,15 @@ export default [
       hideInMenu: true
     },
     component: Main,
-    children: [
-      {
-        path: 'error_logger_page',
-        name: 'error_logger_page',
-        meta: {
-          icon: 'ios-bug',
-          title: '错误收集'
-        },
-        component: () => import('@/view/single-page/error-logger.vue')
-      }
-    ]
+    children: [{
+      path: 'error_logger_page',
+      name: 'error_logger_page',
+      meta: {
+        icon: 'ios-bug',
+        title: '错误收集'
+      },
+      component: () => import('@/view/single-page/error-logger.vue')
+    }]
   },
   {
     path: '/directive',
@@ -423,17 +405,15 @@ export default [
       hideInBread: true
     },
     component: Main,
-    children: [
-      {
-        path: 'directive_page',
-        name: 'directive_page',
-        meta: {
-          icon: 'ios-navigate',
-          title: '指令'
-        },
-        component: () => import('@/view/directive/directive.vue')
-      }
-    ]
+    children: [{
+      path: 'directive_page',
+      name: 'directive_page',
+      meta: {
+        icon: 'ios-navigate',
+        title: '指令'
+      },
+      component: () => import('@/view/directive/directive.vue')
+    }]
   },
   {
     path: '/multilevel',
@@ -443,8 +423,7 @@ export default [
       title: '多级菜单'
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'level_2_1',
         name: 'level_2_1',
         meta: {
@@ -463,8 +442,7 @@ export default [
           title: '二级-2'
         },
         component: parentView,
-        children: [
-          {
+        children: [{
             path: 'level_2_2_1',
             name: 'level_2_2_1',
             meta: {
@@ -502,8 +480,7 @@ export default [
       hideInMenu: true
     },
     component: Main,
-    children: [
-      {
+    children: [{
         path: 'params/:id',
         name: 'params',
         meta: {
@@ -527,21 +504,34 @@ export default [
     ]
   },
   {
-    path: '/401',
-    name: 'error_401',
+    path: '/error',
+    name: 'error',
+    component: Main,
     meta: {
       hideInMenu: true
     },
-    component: () => import('@/view/error-page/401.vue')
+    children: [{
+        path: '/500',
+        name: 'error_500',
+        meta: {
+          hideInMenu: true,
+          title: '网络异常'
+        },
+        component: () => import('@/view/error-page/500.vue')
+      },
+      {
+        path: '/401',
+        name: 'error_401',
+        component: Main,
+        meta: {
+          hideInMenu: true,
+          title: '无权限'
+        },
+        component: () => import('@/view/error-page/401.vue')
+      }
+    ]
   },
-  {
-    path: '/500',
-    name: 'error_500',
-    meta: {
-      hideInMenu: true
-    },
-    component: () => import('@/view/error-page/500.vue')
-  },
+
   {
     path: '*',
     name: 'error_404',

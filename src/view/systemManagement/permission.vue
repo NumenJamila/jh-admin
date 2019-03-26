@@ -25,7 +25,7 @@
         ></Page>
       </div>
       <Button
-        v-if="jurisdiction['systemManagement:roleManagement:list']"
+        v-if="jurisdiction['systemManagement:permission:add']"
         class="search-btn loc"
         @click="newModalFunc"
         type="primary"
@@ -113,31 +113,16 @@ export default {
       loading: false,
       columns: [
         {
+          title: "序号",
+          type: "index",
+          key: "index",
+          align: "center",
+          width: 60
+        },
+        {
           title: '名称',
           key: 'name',
-          align: 'center',
-          render: (h, params) => {
-            return h('div', [
-              h(
-                'a',
-                {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.addTwoPermission(params.row.id, params.row.level)
-                    }
-                  }
-                },
-                params.row.name
-              )
-            ])
-          }
+          align: 'center'
         },
         { title: '描述', key: 'permissionDesc', align: 'center' },
         { title: '权限编码', key: 'permissionCode', align: 'center' },
@@ -179,7 +164,8 @@ export default {
                     icon: 'md-create'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    display: (!this.jurisdiction['systemManagement:permission:update']) ? 'none' : 'inline-block'
                   },
                   on: {
                     click: () => {
@@ -249,7 +235,7 @@ export default {
                         icon: 'ios-trash'
                       },
                       style: {
-                        marginRight: '5px'
+                        display: (!this.jurisdiction['systemManagement:permission:delete']) ? 'none' : 'inline-block'
                       }
                     },
                     '移除'
@@ -264,13 +250,15 @@ export default {
     }
   },
   methods: {
-    // 唤起新增权限
-    addTwoPermission (id) {
-      alert(id)
-    },
-    // 唤起新增角色对话框
+    // 唤起新增权限对话框
     newModalFunc () {
       this.modalTitle = '新增权限'
+      this.formItem = {
+        id: undefined,
+        name: '',
+        permissionDesc: '',
+        permissionCode: ''
+      }
       this.newModal = true
     },
     // 唤起修改对话框
@@ -357,6 +345,7 @@ export default {
     // 换页
     changePage (pageNo) {
       this.loading = true
+      this.pageNo = pageNo
       let data = {
         pageNo: pageNo,
         pageSize: this.pageSize

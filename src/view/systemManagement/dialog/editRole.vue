@@ -46,7 +46,6 @@
         <TabPane label="用户管理">
           <Card>
             <Button
-              v-if="jurisdiction['systemManagement:roleManagement:list']"
               class="search-btn loc"
               @click="newModalFunc"
               type="primary"
@@ -301,15 +300,17 @@ export default {
                   }
                 }
               } else {
-                this.permissionData.splice(i,i);
+                this.permissionData.splice(i,1);
               }
             }
           } else {
+            this.permissionData = [];
             this.$Message.error("请求失败:" + res.data.msg);
           }
         })
         .catch(err => {
           console.log(err);
+          this.permissionData = [];
           this.loading = false;
           this.$Message.error("网络异常");
         });
@@ -322,6 +323,7 @@ export default {
     // 换页
     changePage(pageNo) {
       this.loading = true;
+      this.pageNo = pageNo
       let data = {
         roleId: this.roleId,
         pageNo: pageNo,

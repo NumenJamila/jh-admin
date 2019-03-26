@@ -190,7 +190,8 @@ export default {
                     // icon: 'md-create'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    display: (!this.jurisdiction['systemManagement:userManagement:add']) ? 'none' : 'inline-block'
                   },
                   on: {
                     click: () => {
@@ -254,6 +255,7 @@ export default {
                     },
                     style: {
                       // marginRight: '5px'
+                      display: (!this.jurisdiction['systemManagement:userManagement:delete']) ? 'none' : 'inline-block'
                     }
                   }, '移除')
                 ])
@@ -368,6 +370,7 @@ export default {
     // 换页
     changePage (pageNo) {
       this.loading = true
+      this.pageNo = pageNo
       let data = {
         pageNo: pageNo,
         pageSize: this.pageSize

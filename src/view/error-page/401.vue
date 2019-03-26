@@ -5,6 +5,8 @@
 <script>
 import error401 from '@/assets/images/error-page/error-401.svg'
 import errorContent from './error-content.vue'
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'error_401',
   components: {
@@ -14,6 +16,14 @@ export default {
     return {
       src: error401
     }
+  },
+  methods: {
+    ...mapMutations([
+      'closeTag'
+    ])
+  },
+  mounted() {
+    this.closeTag({name:vueReferer})
   }
 }
 </script>

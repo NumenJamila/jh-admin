@@ -25,7 +25,7 @@
         ></Page>
       </div>
       <Button
-        v-if="jurisdiction['systemManagement:roleManagement:list']"
+        v-if="jurisdiction['systemManagement:roleManagement:add']"
         class="search-btn loc"
         @click="newModalFunc"
         type="primary"
@@ -163,7 +163,11 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.editRoleFunc(params.row.id);
+                      if(this.jurisdiction['systemManagement:roleManagement:todo']) {
+                        this.editRoleFunc(params.row.id);
+                      } else {
+                        this.$Message.error("无权限操作")
+                      }
                     }
                   }
                 },
@@ -213,7 +217,8 @@ export default {
                     icon: "md-create"
                   },
                   style: {
-                    marginRight: "5px"
+                    marginRight: "5px",
+                    display: (!this.jurisdiction['systemManagement:roleManagement:update']) ? 'none' : 'inline-block'
                   },
                   on: {
                     click: () => {
@@ -285,7 +290,7 @@ export default {
                       },
                       style: {
                         // marginRight: "5px"
-                        display: (params.row.id == 1) ? 'none' : 'inline-block'
+                        display: (params.row.id == 1 || (!this.jurisdiction['systemManagement:userManagement:add'])) ? 'none' : 'inline-block'
                       }
                     },
                     "移除"
@@ -410,6 +415,7 @@ export default {
     // 换页
     changePage(pageNo) {
       this.loading = true;
+      this.pageNo = pageNo
       let data = {
         pageNo: pageNo,
         pageSize: this.pageSize

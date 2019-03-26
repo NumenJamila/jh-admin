@@ -189,7 +189,8 @@ export default {
                   icon: 'ios-play'
                 },
                 style: {
-                  marginRight: '5px'
+                  marginRight: '5px',
+                  display: (!this.jurisdiction['systemManagement:job:run']) ? 'none' : 'inline-block'
                 },
                 on: {
                   click: function () {
@@ -210,7 +211,8 @@ export default {
                   icon: 'md-create'
                 },
                 style: {
-                  marginRight: '5px'
+                  marginRight: '5px',
+                  display: (!this.jurisdiction['systemManagement:job:update']) ? 'none' : 'inline-block'
                 },
                 on: {
                   click: function () {
@@ -232,7 +234,7 @@ export default {
                 },
                 on: {
                   'on-ok': () => {
-                    this.deleteJob(params.row.id)
+                    this.deleteJob(params.row.jobName, params.row.jobGroup)
                   }
                 }
               },
@@ -244,7 +246,8 @@ export default {
                     icon: 'ios-trash'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    display: (!this.jurisdiction['systemManagement:job:delete']) ? 'none' : 'inline-block'
                   }
                 }, '移除')
               ]
@@ -284,6 +287,7 @@ export default {
                   },
                   style: {
                     // marginRight: "8px"
+                    display: (!this.jurisdiction['systemManagement:job:resume']) ? 'none' : 'inline-block'
                   },
                   on: {
                     click: function () {
@@ -306,6 +310,7 @@ export default {
                   },
                   style: {
                     // marginRight: "8px"
+                    display: (!this.jurisdiction['systemManagement:job:pause']) ? 'none' : 'inline-block'
                   },
                   on: {
                     click: function () {
