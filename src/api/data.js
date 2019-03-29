@@ -9,7 +9,7 @@ export const getRoleData = ({
     pageSize
   }
   return axios.request({
-    url: '/hzy/role/list',
+    url: '/role/list',
     data,
     method: 'post'
   })
@@ -27,14 +27,14 @@ export const updateRoleData = ({
     enName
   }
   return axios.request({
-    url: '/hzy/role/update',
+    url: '/role/update',
     data,
     method: 'post'
   })
 }
 export const deleteRoleData = (id) => {
   return axios.request({
-    url: '/hzy/role/delete',
+    url: '/role/delete',
     params: {
       id
     },
@@ -52,7 +52,7 @@ export const addRoleData = ({
     enName
   }
   return axios.request({
-    url: '/hzy/role/add',
+    url: '/role/add',
     data,
     method: 'post'
   })
@@ -66,7 +66,7 @@ export const getMenuData = ({
     pageSize
   }
   return axios.request({
-    url: '/hzy/menu/list',
+    url: '/menu/list',
     data,
     method: 'post'
   })
@@ -94,7 +94,7 @@ export const addMenuData = ({
     level
   }
   return axios.request({
-    url: '/hzy/menu/add',
+    url: '/menu/add',
     data,
     method: 'post'
   })
@@ -124,14 +124,14 @@ export const updateMenuData = ({
     level
   }
   return axios.request({
-    url: '/hzy/menu/update',
+    url: '/menu/update',
     data,
     method: 'post'
   })
 }
 export const deleteMenuData = (id) => {
   return axios.request({
-    url: '/hzy/menu/delete',
+    url: '/menu/delete',
     params: {
       id
     },
@@ -147,7 +147,7 @@ export const getPermissionData = ({
     pageSize
   }
   return axios.request({
-    url: '/hzy/permission/list',
+    url: '/permission/list',
     data,
     method: 'post'
   })
@@ -163,7 +163,7 @@ export const addPermissionData = ({
     permissionCode
   }
   return axios.request({
-    url: '/hzy/permission/add',
+    url: '/permission/add',
     data,
     method: 'post'
   })
@@ -181,14 +181,14 @@ export const updatePermissionData = ({
     permissionCode
   }
   return axios.request({
-    url: '/hzy/permission/update',
+    url: '/permission/update',
     data,
     method: 'post'
   })
 }
 export const deletePermissionData = (id) => {
   return axios.request({
-    url: '/hzy/permission/delete',
+    url: '/permission/delete',
     params: {
       id
     },
@@ -197,7 +197,7 @@ export const deletePermissionData = (id) => {
 }
 export const getJobData = () => {
   return axios.request({
-    url: '/hzy/job/list',
+    url: '/job/list',
     method: 'post'
   })
 }
@@ -216,7 +216,7 @@ export const addJobData = ({
     cronExpression
   }
   return axios.request({
-    url: '/hzy/job/add',
+    url: '/job/add',
     data,
     method: 'post'
   })
@@ -244,48 +244,48 @@ export const updateJobData = ({
     oldJobGroup
   }
   return axios.request({
-    url: '/hzy/job/add',
+    url: '/job/add',
     data,
     method: 'post'
   })
 }
 export const deleteJobData = (data) => {
   return axios.request({
-    url: '/hzy/job/delete',
+    url: '/job/delete',
     data,
     method: 'post'
   })
 }
 export const pauseJobData = (data) => {
   return axios.request({
-    url: '/hzy/job/pause',
+    url: '/job/pause',
     data,
     method: 'post'
   })
 }
 export const resumeJobData = (data) => {
   return axios.request({
-    url: '/hzy/job/resume',
+    url: '/job/resume',
     data,
     method: 'post'
   })
 }
 export const triggerJobData = (data) => {
   return axios.request({
-    url: '/hzy/job/trigger',
+    url: '/job/trigger',
     data,
     method: 'post'
   })
 }
 export const getFirstMenu = () => {
   return axios.request({
-    url: '/hzy/role/getFirstMenu',
+    url: '/role/getFirstMenu',
     method: 'get'
   })
 }
 export const getPermission = (menuId, roleId) => {
   return axios.request({
-    url: '/hzy/role/getPermission',
+    url: '/role/getPermission',
     method: 'get',
     params: {
       menuId,
@@ -295,7 +295,7 @@ export const getPermission = (menuId, roleId) => {
 }
 export const updatePermissionNew = (roleId, permissionIds) => {
   return axios.request({
-    url: '/hzy/role/updatePermissionNew',
+    url: '/role/updatePermissionNew',
     params: {
       roleId,
       permissionIds
@@ -312,7 +312,7 @@ export const getUserData = ({
     pageSize
   }
   return axios.request({
-    url: '/hzy/user/list',
+    url: '/user/list',
     data,
     method: 'post'
   })
@@ -332,14 +332,14 @@ export const updateUserData = ({
     email
   }
   return axios.request({
-    url: '/hzy/user/update',
+    url: '/user/update',
     data,
     method: 'post'
   })
 }
 export const deleteUserData = (id) => {
   return axios.request({
-    url: '/hzy/user/delete',
+    url: '/user/delete',
     params: {
       id
     },
@@ -361,7 +361,7 @@ export const addUserData = ({
     email
   }
   return axios.request({
-    url: '/hzy/user/add',
+    url: '/user/add',
     data,
     method: 'post'
   })
@@ -377,14 +377,14 @@ export const getRoleUserList = ({
   pageSize
   }
   return axios.request({
-    url: '/hzy/role/getRoleUserList',
+    url: '/role/getRoleUserList',
     data,
     method: 'post'
   })
 }
 export const getOtherUsersList = (roleId) => {
   return axios.request({
-    url: '/hzy/role/getOtherUsersList',
+    url: '/role/getOtherUsersList',
     params:{
       roleId: roleId
     },
@@ -393,7 +393,7 @@ export const getOtherUsersList = (roleId) => {
 }
 export const deleteRoleUserRel = (id) => {
   return axios.request({
-    url: '/hzy/role/deleteRoleUserRel',
+    url: '/role/deleteRoleUserRel',
     params:{
       relId: id
     },
@@ -405,7 +405,7 @@ export const addRoleUsersRel = ({roleId, userIds}) => {
     roleId, userIds
   }
   return axios.request({
-    url: '/hzy/role/addRoleUsersRel',
+    url: '/role/addRoleUsersRel',
     data,
     method: 'post'
   })

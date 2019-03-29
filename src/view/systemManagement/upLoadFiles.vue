@@ -69,7 +69,7 @@ export default {
       process.env.NODE_ENV === "development"
         ? this.$config.publicPath.dev
         : config.publicPath.pro;
-    this.uploadUrl = publicPath + "/hzy/demo/upload";
+    this.uploadUrl = publicPath + "/demo/upload";
   }
 };
 </script>

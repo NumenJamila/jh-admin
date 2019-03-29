@@ -48,8 +48,9 @@ Vue.directive('clickOutside', clickOutside)
 import axios from '@/libs/api.request'
 import $ from 'jquery'
 //不需要校验登录的的页面
-const excludePage = ['login', 'error_500']
+const excludePage = ['login', 'error_500', 'error_404']
 
+// 记录来源页面路由，无权限时关闭
 window.vueReferer = '';
 router.beforeEach((to, from, next) => {
   if (from) {
@@ -65,30 +66,20 @@ router.beforeEach((to, from, next) => {
 function toGetSetMenu(to, from, next) {
   iView.LoadingBar.start()
   axios.request({
-    url: '/hzy/auth/setMenu',
+    url: '/auth/setMenu',
     method: 'post'
   }).then(res => {
-    if (!res.data.isSuccess && to.name !== "login") {
+    if (!res.data.isSuccess) {
       // 未登录且要跳转的页面不是登录页
       next({
         name: "login" // 跳转到登录页
-      })
-    } else if (!res.data.isSuccess && to.name === "login") {
-      // 未登陆且要跳转的页面是登录页
-      next() // 跳转
-    } else if (res.data.isSuccess && to.name === "login") {
-      // 已登录且要跳转的页面是登录页
-      next({
-        name: config.homeName // 跳转到homeName页
       })
     } else {
       var userInfo = {
         user: res.data.userInfo,
         menuList: res.data.menuList,
-        // menuList: menu,
         oprKeyList: res.data.codeList
       }
-
       store.dispatch('setUserInfo', userInfo)
       next()
     }

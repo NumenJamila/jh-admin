@@ -31,16 +31,18 @@ class HttpRequest {
     delete this.queue[url]
     if (!Object.keys(this.queue).length) {
       // Spin.hide()
+      store.dispatch('setLoading', false)
     }
   }
   interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
-      console.log("请求拦截")
-      console.log(config)
+      // console.log("请求拦截")
+      // console.log(config)
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好
+        store.dispatch('setLoading', true)
       }
       this.queue[url] = true
       return config
@@ -54,6 +56,9 @@ class HttpRequest {
       console.log("响应拦截")
       console.log(res)
       this.destroy(url)
+      if(res.data.code === 1007) {
+        router.replace({ name: 'login' })
+      }
       if(res.data.code === 401) {
         router.replace({ name: 'error_401' })
       }

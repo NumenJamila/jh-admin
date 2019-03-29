@@ -1,24 +1,41 @@
 <style lang="less">
 @import "./login.less";
+.ivu-card-head {
+  text-align: center;
+  p {
+    font-size: 16px;
+  }
+}
+.ivu-form-item:last-child {
+  margin-bottom: 10px;
+}
 </style>
 
 <template>
   <div class="login">
     <div class="login-con">
-      <Card icon="log-in" title="欢迎登录" :bordered="false">
+      <Card icon="md-globe" title="欢迎登录巨合管理系统" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">输入任意用户名和密码即可</p>
         </div>
       </Card>
     </div>
+    <Spin size="large" fix v-if="this.getLoading"></Spin>
   </div>
 </template>
 
 <script>
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
+import store from '@/store';
+import { mapGetters } from "vuex";
 export default {
+  name:"login",
+  computed: {
+    ...mapGetters({
+      getLoading: "getLoading"
+    })
+  },
   components: {
     LoginForm
   },
@@ -32,6 +49,8 @@ export default {
               name: this.$config.homeName
             })
           })
+        } else {
+          this.$Message.error("账户或密码错误")
         }
       })
     }

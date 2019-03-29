@@ -6,7 +6,7 @@ export const login = ({ name, password }) => {
     password
   }
   return axios.request({
-    url: '/hzy/auth/login',
+    url: '/auth/login',
     data,
     method: 'post'
   })
@@ -17,7 +17,7 @@ export const loginByAccessToken = (token) => {
     token
   }
   return axios.request({
-    url: '/hzy/auth/loginByAccessToken',
+    url: '/auth/loginByAccessToken',
     data,
     method: 'post'
   })
@@ -25,13 +25,14 @@ export const loginByAccessToken = (token) => {
 
 export const logout = () => {
   return axios.request({
-    url: '/hzy/auth/logout',
+    url: '/auth/logout',
     method: 'post'
   })
 }
+
 export const getUserInfo = () => {
   return axios.request({
-    url: '/hzy/user/getUserInfo',
+    url: '/user/getUserInfo',
     method: 'get'
   })
 }
@@ -40,7 +41,7 @@ export const updateMyself = ({id, nickName, mobile, email, head}) => {
     id, nickName, mobile, email, head
   }
   return axios.request({
-    url: '/hzy/user/updateMyself',
+    url: '/user/updateMyself',
     data,
     method: 'post'
   })

@@ -140,7 +140,7 @@ export default {
       var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
       e.preventDefault();
       $("#uploadForm").ajaxSubmit({
-        url: publicPath + "/hzy/user/uploadHead",
+        url: publicPath + "/user/uploadHead",
         success: function(result) {
           if (result.isSuccess) {
             if (objUrl) {

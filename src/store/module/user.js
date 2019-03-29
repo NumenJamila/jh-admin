@@ -105,7 +105,7 @@ export default {
         // resolve()
       })
     },
-    // 获取用户相关信息
+    // 根据返回的token继续登录
     loginByAccessToken ({ commit }, token) {
       return new Promise((resolve, reject) => {
         try {
