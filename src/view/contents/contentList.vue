@@ -27,28 +27,11 @@
       <Button
         v-if="jurisdiction['systemManagement:permission:add']"
         class="search-btn loc"
-        @click="newModalFunc"
+        @click="toDetail"
         type="primary"
       >
-        <Icon type="search"/>新建权限
+        <Icon type="search"/>新建内容
       </Button>
-      <Modal v-model="newModal" :title="modalTitle" :loading="modelLoading">
-        <Form :model="formItem" ref="formValidate" :label-width="80" :rules="rules">
-          <FormItem label="名称" prop="name">
-            <Input v-model="formItem.name" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="描述" prop="permissionDesc">
-            <Input v-model="formItem.permissionDesc" placeholder="Enter something..."></Input>
-          </FormItem>
-          <FormItem label="编码" prop="permissionCode">
-            <Input v-model="formItem.permissionCode" placeholder="Enter something..."></Input>
-          </FormItem>
-        </Form>
-        <div slot="footer">
-          <Button type="text" size="large" @click="modalCancel">取消</Button>
-          <Button type="primary" size="large" @click="modalOk">确定</Button>
-        </div>
-      </Modal>
     </Card>
   </div>
 </template>
@@ -68,7 +51,7 @@ export default {
       jurisdiction: 'jurisdiction'
     })
   },
-  name: 'permission',
+  name: 'contentList',
   components: {
     Tables
   },
@@ -82,7 +65,7 @@ export default {
     }
     return {
       newModal: false,
-      modalTitle: '新建权限',
+      modalTitle: '新建内容',
       modelLoading: true,
       formItem: {
         id: undefined,
@@ -120,12 +103,14 @@ export default {
           width: 60
         },
         {
-          title: '名称',
+          title: '文章标题',
           key: 'name',
           align: 'center'
         },
-        { title: '描述', key: 'permissionDesc', align: 'center' },
-        { title: '权限编码', key: 'permissionCode', align: 'center' },
+        { title: '简介', key: 'permissionDesc', align: 'center' },
+        { title: '作者', key: 'permissioode', align: 'center' },
+        { title: 'PC模式', key: 'permissnCode', align: 'center' },
+        { title: '手机模式', key: 'permisionCode', align: 'center' },
         {
           title: '操作',
           align: 'center',
@@ -169,12 +154,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.editBus(
-                        params.row.id,
-                        params.row.name,
-                        params.row.permissionDesc,
-                        params.row.permissionCode
-                      )
+                      this.toDetail(scope.row.id)
                     }
                   }
                 },
@@ -221,7 +201,7 @@ export default {
                   },
                   on: {
                     'on-ok': () => {
-                      this.detelePermission(params.row.id)
+                      this.deteleContent(params.row.id)
                     }
                   }
                 },
@@ -249,37 +229,20 @@ export default {
       tableData: []
     }
   },
-  methods: {
-    // 唤起新增权限对话框
-    newModalFunc () {
-      this.modalTitle = '新增权限'
-      this.formItem = {
-        id: undefined,
-        name: '',
-        permissionDesc: '',
-        permissionCode: ''
+ methods: {
+   // 内容
+    deteleContent (jobName, jobGroup) {
+      let data = {
+        time: new Date().toString(),
+        jobName: jobName,
+        jobGroup: jobGroup
       }
-      this.newModal = true
-    },
-    // 唤起修改对话框
-    editBus (id, name, permissionDesc, permissionCode) {
-      this.modalTitle = '新增权限'
-      this.formItem = {
-        id: id,
-        name: name,
-        permissionDesc: permissionDesc,
-        permissionCode: permissionCode
-      }
-      this.newModal = true
-    },
-    // 删除权限
-    detelePermission (id) {
-      deletePermissionData(id)
+      deteleContentData(data)
         .then(res => {
           this.loading = false
           if (res.data.isSuccess) {
-            this.$Message.info('已删除权限')
-            this.startToGetPermissionList()
+            this.$Message.info('已删除内容')
+            this.startToGetContentList()
           } else {
             this.$Message.error('请求失败：' + res.data.msg)
           }
@@ -290,106 +253,45 @@ export default {
           this.$Message.error('网络异常')
         })
     },
-    // 新建、修改菜单
-    modalOk () {
-      this.$refs.formValidate.validate(valid => {
-        if (valid) {
-          if (!this.formItem.id || this.formItem.id === undefined) {
-            addPermissionData(this.formItem)
-              .then(res => {
-                if (res.data.isSuccess) {
-                  this.$Message.info('添加成功')
-                  this.newModal = false
-                  this.startToGetPermissionList()
-                } else {
-                  this.$Message.error("请求失败:" + res.data.msg)
-                }
-              })
-              .catch(res => {
-                this.$Message.error('网络异常')
-              })
-          } else {
-            updatePermissionData(this.formItem)
-              .then(res => {
-                if (res.data.isSuccess) {
-                  this.$Message.info('修改成功')
-                  this.newModal = false
-                  this.startToGetPermissionList()
-                } else {
-                  this.$Message.error("请求失败:" + res.data.msg)
-                }
-              })
-              .catch(res => {
-                this.$Message.error('网络异常')
-              })
-          }
-        } else {
-        }
+   // 跳转模板详情
+    toDetail: function (id) {
+      this.$router.push({
+        name: 'addContent',
+        query: {id: id}
       })
     },
-    modalCancel () {
-      this.formItem = {
-        id: undefined,
-        name: '',
-        permissionDesc: '',
-        permissionCode: ''
-      }
-      this.newModal = false
-    },
-
-    setPageSize (pageSize) {
-      this.pageSize = pageSize
-      console.log(pageSize)
-      this.changePage(this.pageNo)
+    setPageSize(pageSize) {
+      this.pageSize = pageSize;
+      this.GetContentList()
     },
     // 换页
-    changePage (pageNo) {
-      this.loading = true
+    changePage(pageNo) {
       this.pageNo = pageNo
-      let data = {
-        pageNo: pageNo,
-        pageSize: this.pageSize
-      }
-      getPermissionData(data)
-        .then(res => {
-          this.loading = false
-          if (res.data.isSuccess) {
-            this.tableData = res.data.data.entities
-            this.entityCount = res.data.data.entityCount
-          } else {
-            this.$Message.error("请求失败:" + res.data.msg)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-          this.loading = false
-          this.$Message.error('网络异常')
-        })
+      this.GetContentList()
     },
-    startToGetPermissionList () {
-      this.loading = true
+    GetContentList() {
+      this.loading = true;
       let data = {
         pageNo: this.pageNo,
         pageSize: this.pageSize
-      }
-      getPermissionData(data)
+      };
+      getContentData(data)
         .then(res => {
-          this.loading = false
+          this.loading = false;
           if (res.data.isSuccess) {
-            console.log(res)
-            this.tableData = res.data.data.entities
-            this.entityCount = res.data.data.entityCount
+            this.tableData = res.data.data.entities;
+            this.entityCount = res.data.data.entityCount;
           } else {
           }
         })
         .catch(err => {
-          this.loading = false
-          console.log(err)
-        })
+          this.loading = false;
+          console.log(err);
+        });
     }
   },
   mounted () {
-    this.startToGetPermissionList()
+
   }
 }
 </script>

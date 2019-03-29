@@ -1,87 +1,40 @@
 <template>
-  <div>
-    <Card>
-      <Form :model="formItem" ref="formValidate" :label-width="80" :rules="rules">
-        <FormItem label="文章内容" prop="textContent">
-          <ueditor :value="formItem.textContent" :config="config" v-on:input="input" v-on:ready="ready" :random="editorRandom"></ueditor>
-        </FormItem>
-        <FormItem label="编码" prop="permissionCode">
-          <Button type="text" size="large" @click="">取消</Button>
-          <Button type="primary" size="large" @click="">确定</Button>
-        </FormItem>
-      </Form>
+    <Card class="ueditor">
+      <vue-ueditor-wrap v-model="content" :config="myConfig"></vue-ueditor-wrap>
+      {{ content }}
     </Card>
-  </div>
 </template>
 
 <script>
-import ueditor from "./comm/ueditor.vue";
-import {
-  addPermissionData,
-  deletePermissionData,
-  updatePermissionData,
-  getPermissionData
-} from "@/api/data";
-import { mapGetters } from "vuex";
-export default {
-  computed: {
-    ...mapGetters({
-      jurisdiction: "jurisdiction"
-    })
-  },
-  name: "permission",
-  components: {
-    ueditor
-  },
-  data() {
-    var isNotEmpty = (rule, value, callback) => {
-      if (!value || value.replace(/\s*/g, "") === "") {
-        return callback(new Error(""));
-      } else {
-        callback();
+  import VueUeditorWrap from 'vue-ueditor-wrap'
+  export default {
+    name: 'Ueditor',
+    components: {VueUeditorWrap},
+    data () {
+      return {
+        myConfig: {
+          // 如果需要上传功能,找后端小伙伴要服务器接口地址
+          // serverUrl: this.$config.baseUrl + 'ueditor/ueditorConfig',
+          serverUrl: 'http://localhost:8090/ueditor/ueditorConfig',
+          // 你的UEditor资源存放的路径,相对于打包后的index.html
+          UEDITOR_HOME_URL: '/ueditor/',
+          // 编辑器不自动被内容撑高
+          autoHeightEnabled: false,
+          // 工具栏是否可以浮动
+          autoFloatEnabled: false,
+          // 初始容器高度
+          initialFrameHeight: 340,
+          // 初始容器宽度
+          initialFrameWidth: '100%',
+          // 关闭自动保存
+          enableAutoSave: true
+        },
+        content: ''
       }
-    };
-    return {
-      config: {
-        initialFrameWidth: null,
-        initialFrameHeight: 320
-			},
-			editorRandom: Math.random(),
-      formItem: {
-        id: undefined,
-        name: "",
-        permissionDesc: "",
-        permissionCode: ""
-      },
-
-      rules: {
-        name: [
-          { required: true, validator: isNotEmpty, trigger: "blur" },
-          { min: 2, message: "角色中文名称不可少于2个字", trigger: "blur" },
-          { max: 20, message: "角色中文名称不可超过20个字", trigger: "blur" }
-        ]
-      },
-    };
-  },
-  methods: {
-    input: function(content) {
-      this.textContent = content.content;
-		},
-		ready: function() {},
-  },
-  mounted() {
-    
+    }
   }
-};
 </script>
 
 <style scoped>
-.colClass {
-  text-align: center;
-}
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 </style>

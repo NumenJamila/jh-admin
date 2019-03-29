@@ -131,16 +131,12 @@ export default {
       }
       return url;
     }
-    const publicPath =
-      process.env.NODE_ENV === "development"
-        ? that.$config.publicPath.dev
-        : config.publicPath.pro;
     // 上传头像
     $("#user-icon").on("change", function(e) {
       var objUrl = getObjectURL(this.files[0]); //获取图片的路径，该路径不是图片在本地的路径
       e.preventDefault();
       $("#uploadForm").ajaxSubmit({
-        url: publicPath + "/user/uploadHead",
+        url: that.$baseApi + "/user/uploadHead",
         success: function(result) {
           if (result.isSuccess) {
             if (objUrl) {

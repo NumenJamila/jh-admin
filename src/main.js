@@ -18,9 +18,9 @@ import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
 
-// 实际打包时应该不引入mock，用测试环境测试时也需注释mock
+// 实际打包时应该不引入mock
 /* eslint-disable */
-if (process.env.NODE_ENV !== 'production') require('@/mock')
+// if (process.env.NODE_ENV !== 'production') require('@/mock')
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)

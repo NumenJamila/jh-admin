@@ -65,11 +65,7 @@ export default {
 		}
   },
   mounted() {
-    const publicPath =
-      process.env.NODE_ENV === "development"
-        ? this.$config.publicPath.dev
-        : config.publicPath.pro;
-    this.uploadUrl = publicPath + "/demo/upload";
+    this.uploadUrl = this.$baseApi + "/demo/upload";
   }
 };
 </script>

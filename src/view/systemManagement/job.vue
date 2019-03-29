@@ -72,7 +72,7 @@ export default {
       jurisdiction: 'jurisdiction'
     })
   },
-  name: 'tables_page',
+  name: 'job',
   components: {
     Tables
   },

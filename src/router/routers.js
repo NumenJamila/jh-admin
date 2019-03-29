@@ -1,4 +1,5 @@
 import Main from '@/components/main'
+import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -170,16 +171,15 @@ export default [{
   {
     path: '/contents',
     name: 'contents',
-    component: Main,
     meta: {
       icon: 'md-clipboard',
       title: '内容管理'
     },
+    component: Main,
     children: [
       {
         path: '/contentList',
         name: 'contentList',
-        component: Main,
         meta: {
           icon: 'logo-buffer',
           title: '内容列表'
@@ -189,7 +189,6 @@ export default [{
       {
         path: '/addContent',
         name: 'addContent',
-        component: Main,
         meta: {
           icon: 'md-color-palette',
           title: '文本内容'
@@ -285,7 +284,6 @@ export default [{
       {
         path: '/401',
         name: 'error_401',
-        component: Main,
         meta: {
           hideInMenu: true,
           title: '无权限'
