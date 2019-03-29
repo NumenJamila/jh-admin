@@ -15,7 +15,7 @@
         myConfig: {
           // 如果需要上传功能,找后端小伙伴要服务器接口地址
           // serverUrl: this.$config.baseUrl + 'ueditor/ueditorConfig',
-          serverUrl: 'http://localhost:8090/ueditor/ueditorConfig',
+          serverUrl: this.$baseApi + 'ueditor/exec',
           // 你的UEditor资源存放的路径,相对于打包后的index.html
           UEDITOR_HOME_URL: '/ueditor/',
           // 编辑器不自动被内容撑高
