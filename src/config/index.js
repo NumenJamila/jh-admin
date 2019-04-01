@@ -18,8 +18,8 @@ export default {
    */
   publicPath: {
     dev: '/api/',
-    pro: 'http://192.168.1.210:80',
-    test: 'http://192.168.1.210:80',
+    pro: 'http://118.24.195.20/hzy',
+    preview: 'http://118.24.195.20/hzy',
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home
