@@ -58,7 +58,11 @@ router.beforeEach((to, from, next) => {
     vueReferer = from.name
   }
   if ($.inArray(to.name, excludePage) < 0) {
-    toGetSetMenu(to, from, next)
+    if(!store.getters.getIsSkip) {
+      toGetSetMenu(to, from, next)
+    } else {
+      next()
+    }
   } else {
     next()
   }
@@ -76,6 +80,7 @@ function toGetSetMenu(to, from, next) {
         name: "login" // 跳转到登录页
       })
     } else {
+      store.dispatch('setIsSkip',true)
       var userInfo = {
         user: res.data.userInfo,
         menuList: res.data.menuList,
@@ -84,7 +89,8 @@ function toGetSetMenu(to, from, next) {
       store.dispatch('setUserInfo', userInfo)
       next()
     }
-  }).catch(res => {
+  }).catch(err => {
+    console.log(err)
     next({
       name: "error_500" // 跳转到500
     })

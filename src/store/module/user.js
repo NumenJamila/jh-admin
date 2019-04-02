@@ -42,7 +42,7 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
-          // commit('setToken', '')
+          commit('setIsSkip',false)
           // commit('setAccess', [])
           resolve()
         }).catch(err => {

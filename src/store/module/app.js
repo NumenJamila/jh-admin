@@ -26,6 +26,7 @@ const closePage = (state, route) => {
 
 export default {
   state: {
+    isSkip: false,
     breadCrumbList: [],
     tagNavList: [],
     homeRoute: {},
@@ -34,9 +35,23 @@ export default {
     hasReadErrorPage: false
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access)
+    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    getIsSkip: function (state) {
+      return state.isSkip
+    },
+  },
+  actions: {
+    'setIsSkip': function (store, param) {
+      return new Promise(function (resolve, reject) {
+        store.commit('setIsSkip', param)
+        resolve('ok')
+      })
+    }
   },
   mutations: {
+    setIsSkip: function (state, data) {
+      state.isSkip = data
+    },
     setBreadCrumb (state, route) {
       state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)
     },

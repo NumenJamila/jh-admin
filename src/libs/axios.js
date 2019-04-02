@@ -57,6 +57,7 @@ class HttpRequest {
       console.log(res)
       this.destroy(url)
       if(res.data.code === 1007) {
+        store.dispatch('setIsSkip',false)
         router.replace({ name: 'login' })
       }
       if(res.data.code === 401) {
