@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   publicPath: {
-    dev: '/api/',
+    dev: '/api',
     pro: 'http://118.24.195.20/hzy',
     preview: 'http://118.24.195.20/hzy',
   },

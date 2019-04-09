@@ -19,7 +19,7 @@
           // 你的UEditor资源存放的路径,相对于打包后的index.html
           UEDITOR_HOME_URL: '/ueditor/',
           // 编辑器不自动被内容撑高
-          autoHeightEnabled: false,
+          autoHeightEnabled: true,
           // 工具栏是否可以浮动
           autoFloatEnabled: false,
           // 初始容器高度
