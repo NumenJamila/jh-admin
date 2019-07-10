@@ -49,7 +49,7 @@ Vue.directive('clickOutside', clickOutside)
 import axios from '@/libs/api.request'
 import $ from 'jquery'
 //不需要校验登录的的页面
-const excludePage = ['login', 'error_500', 'error_404']
+const excludePage = ['login', 'error_500', 'error_404','numen']
 
 // 记录来源页面路由，无权限时关闭
 window.vueReferer = '';

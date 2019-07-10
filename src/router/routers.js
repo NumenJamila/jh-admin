@@ -302,11 +302,19 @@ export default [{
     component: () => import('@/view/error-page/500.vue')
   },
   {
+    path: '/numen',
+    name: 'numen',
+    meta: {
+      hideInMenu: true
+    },
+    component: () => import('@/view/contents/numen.vue')
+  },
+  {
     path: '*',
     name: 'error_404',
     meta: {
       hideInMenu: true
     },
     component: () => import('@/view/error-page/404.vue')
-  }
+  }  
 ]
