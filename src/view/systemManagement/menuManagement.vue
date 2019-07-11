@@ -69,7 +69,7 @@ import {
   deleteMenuData,
   updateMenuData,
   getMenuData
-} from "@/api/data";
+} from "@/api/admin";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -538,9 +538,5 @@ export default {
 .colClass {
   text-align: center;
 }
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 </style>

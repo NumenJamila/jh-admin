@@ -64,7 +64,7 @@
 
 <script>
 import Tables from '_c/tables'
-import { getUserData, addUserData, deleteUserData, updateUserData } from '@/api/data'
+import { getUserData, addUserData, deleteUserData, updateUserData } from '@/api/admin'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
@@ -422,9 +422,5 @@ export default {
 .colClass {
   text-align: center;
 }
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 </style>

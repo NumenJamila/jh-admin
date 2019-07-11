@@ -49,8 +49,8 @@ module.exports = {
       '/api': {
         // 目标服务器地址
         // target: 'http://118.24.195.20/hzy',
-        // target: 'http://192.168.1.117:8090/hzy',
-        target: 'http://mxo.mobi/hzy',
+        target: 'http://192.168.1.135:8090/zlzy',
+        // target: 'http://mxo.mobi/hzy',
         secure: false,
         // 路径重写
         pathRewrite: {

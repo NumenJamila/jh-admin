@@ -457,11 +457,7 @@ export default {
 };
 </script>
 <style>
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 .ivu-tabs-tabpane {
   border: 1px solid #f1f1f1;
 }

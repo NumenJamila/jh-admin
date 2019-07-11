@@ -67,7 +67,7 @@ import {
   addRoleData,
   deleteRoleData,
   updateRoleData
-} from "@/api/data";
+} from "@/api/admin";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -466,10 +466,5 @@ export default {
 <style scoped>
 .colClass {
   text-align: center;
-}
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
 }
 </style>

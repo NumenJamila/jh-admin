@@ -1,6 +1,7 @@
 import axios from '@/libs/api.request'
 
-export const getRoleData = ({
+// 后台管理-公司标签接口 : TagApi
+export const tagDelete = ({
   pageNo,
   pageSize
 }) => {
@@ -9,55 +10,12 @@ export const getRoleData = ({
     pageSize
   }
   return axios.request({
-    url: '/role/list',
+    url: '/tag/delete',
     data,
     method: 'post'
   })
 }
-export const updateRoleData = ({
-  id,
-  roleName,
-  roleDesc,
-  enName
-}) => {
-  const data = {
-    id,
-    roleName,
-    roleDesc,
-    enName
-  }
-  return axios.request({
-    url: '/role/update',
-    data,
-    method: 'post'
-  })
-}
-export const deleteRoleData = (id) => {
-  return axios.request({
-    url: '/role/delete',
-    params: {
-      id
-    },
-    method: 'get'
-  })
-}
-export const addRoleData = ({
-  roleName,
-  roleDesc,
-  enName
-}) => {
-  const data = {
-    roleName,
-    roleDesc,
-    enName
-  }
-  return axios.request({
-    url: '/role/add',
-    data,
-    method: 'post'
-  })
-}
-export const getMenuData = ({
+export const tagList = ({
   pageNo,
   pageSize
 }) => {
@@ -66,79 +24,12 @@ export const getMenuData = ({
     pageSize
   }
   return axios.request({
-    url: '/menu/list',
+    url: '/tag/list',
     data,
     method: 'post'
   })
 }
-export const addMenuData = ({
-  name,
-  menuDesc,
-  menuIcon,
-  menuUrl,
-  menuCode,
-  parentName,
-  parentId,
-  sort,
-  level
-}) => {
-  const data = {
-    name,
-    menuDesc,
-    menuIcon,
-    menuUrl,
-    menuCode,
-    parentName,
-    parentId,
-    sort,
-    level
-  }
-  return axios.request({
-    url: '/menu/add',
-    data,
-    method: 'post'
-  })
-}
-export const updateMenuData = ({
-  id,
-  name,
-  menuDesc,
-  menuIcon,
-  menuUrl,
-  menuCode,
-  parentName,
-  parentId,
-  sort,
-  level
-}) => {
-  const data = {
-    id,
-    name,
-    menuDesc,
-    menuIcon,
-    menuUrl,
-    menuCode,
-    parentName,
-    parentId,
-    sort,
-    level
-  }
-  return axios.request({
-    url: '/menu/update',
-    data,
-    method: 'post'
-  })
-}
-export const deleteMenuData = (id) => {
-  return axios.request({
-    url: '/menu/delete',
-    params: {
-      id
-    },
-    method: 'get'
-  })
-}
-export const getPermissionData = ({
+export const tagSave = ({
   pageNo,
   pageSize
 }) => {
@@ -147,163 +38,14 @@ export const getPermissionData = ({
     pageSize
   }
   return axios.request({
-    url: '/permission/list',
+    url: '/tag/save',
     data,
     method: 'post'
   })
 }
-export const addPermissionData = ({
-  name,
-  permissionDesc,
-  permissionCode
-}) => {
-  const data = {
-    name,
-    permissionDesc,
-    permissionCode
-  }
-  return axios.request({
-    url: '/permission/add',
-    data,
-    method: 'post'
-  })
-}
-export const updatePermissionData = ({
-  id,
-  name,
-  permissionDesc,
-  permissionCode
-}) => {
-  const data = {
-    id,
-    name,
-    permissionDesc,
-    permissionCode
-  }
-  return axios.request({
-    url: '/permission/update',
-    data,
-    method: 'post'
-  })
-}
-export const deletePermissionData = (id) => {
-  return axios.request({
-    url: '/permission/delete',
-    params: {
-      id
-    },
-    method: 'get'
-  })
-}
-export const getJobData = () => {
-  return axios.request({
-    url: '/job/list',
-    method: 'post'
-  })
-}
-export const addJobData = ({
-  jobName,
-  jobGroup,
-  description,
-  jobClassName,
-  cronExpression
-}) => {
-  const data = {
-    jobName,
-    jobGroup,
-    description,
-    jobClassName,
-    cronExpression
-  }
-  return axios.request({
-    url: '/job/add',
-    data,
-    method: 'post'
-  })
-}
-export const updateJobData = ({
-  id,
-  jobName,
-  jobGroup,
-  description,
-  jobClassName,
-  cronExpression,
-  oldJobName,
-  triggerState,
-  oldJobGroup
-}) => {
-  const data = {
-    id,
-    jobName,
-    jobGroup,
-    description,
-    jobClassName,
-    cronExpression,
-    oldJobName,
-    triggerState,
-    oldJobGroup
-  }
-  return axios.request({
-    url: '/job/add',
-    data,
-    method: 'post'
-  })
-}
-export const deleteJobData = (data) => {
-  return axios.request({
-    url: '/job/delete',
-    data,
-    method: 'post'
-  })
-}
-export const pauseJobData = (data) => {
-  return axios.request({
-    url: '/job/pause',
-    data,
-    method: 'post'
-  })
-}
-export const resumeJobData = (data) => {
-  return axios.request({
-    url: '/job/resume',
-    data,
-    method: 'post'
-  })
-}
-export const triggerJobData = (data) => {
-  return axios.request({
-    url: '/job/trigger',
-    data,
-    method: 'post'
-  })
-}
-export const getFirstMenu = () => {
-  return axios.request({
-    url: '/role/getFirstMenu',
-    method: 'get'
-  })
-}
-export const getPermission = (menuId, roleId) => {
-  return axios.request({
-    url: '/role/getPermission',
-    method: 'get',
-    params: {
-      menuId,
-      roleId
-    }
-  })
-}
-export const updatePermissionNew = (roleId, permissionIds) => {
-  return axios.request({
-    url: '/role/updatePermissionNew',
-    params: {
-      roleId,
-      permissionIds
-    },
-    method: 'get'
-  })
-}
-export const getUserData = ({
+
+// 后台管理-浏览历史接口 : BrowseHistoryApi
+export const browseHistoryDelete = ({
   pageNo,
   pageSize
 }) => {
@@ -312,100 +54,428 @@ export const getUserData = ({
     pageSize
   }
   return axios.request({
-    url: '/user/list',
+    url: '/browseHistory/delete',
     data,
     method: 'post'
   })
 }
-export const updateUserData = ({
-  id,
-  nickName,
-  name,
-  mobile,
-  email
+export const browseHistoryList = ({
+  pageNo,
+  pageSize
 }) => {
   const data = {
-    id,
-    nickName,
-    name,
-    mobile,
-    email
+    pageNo,
+    pageSize
   }
   return axios.request({
-    url: '/user/update',
+    url: '/browseHistory/list',
     data,
     method: 'post'
   })
 }
-export const deleteUserData = (id) => {
+export const browseHistorySave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
   return axios.request({
-    url: '/user/delete',
+    url: '/browseHistory/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-历史收藏接口 : CollectedApi
+export const collectDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/collect/delete',
+    data,
+    method: 'post'
+  })
+}
+export const collectList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/collect/list',
+    data,
+    method: 'post'
+  })
+}
+export const collectSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/collect/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-公司信息接口 : CompanyInfoApi
+export const companyinfoDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyinfo/delete',
+    data,
+    method: 'post'
+  })
+}
+export const companyinfoList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyinfo/list',
+    data,
+    method: 'post'
+  })
+}
+export const companyinfoSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyinfo/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-公司评价信息接口 : CompanyAppraiseApi
+export const companyAppraiseDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyAppraise/delete',
+    data,
+    method: 'post'
+  })
+}
+export const companyAppraiseList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyAppraise/list',
+    data,
+    method: 'post'
+  })
+}
+export const companyAppraiseSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/companyAppraise/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-评价分类接口 : AppraiseApi
+export const appraiseDelete = ( data ) => {
+  return axios.request({
+    url: '/appraise/delete?id=' + data,
+    method: 'post'
+  })
+}
+export const appraiseGetAppraiseList = (id) => {
+  return axios.request({
+    url: '/appraise/getAppraiseList',
     params: {
       id
     },
     method: 'get'
   })
 }
-export const addUserData = ({
-  nickName,
-  name,
-  password,
-  mobile,
-  email
-}) => {
-  const data = {
-    nickName,
-    name,
-    password,
-    mobile,
-    email
-  }
-  return axios.request({
-    url: '/user/add',
-    data,
-    method: 'post'
-  })
-}
-export const getRoleUserList = ({
-  roleId,
+export const appraiseList = ({
   pageNo,
   pageSize
 }) => {
   const data = {
-    roleId,
-  pageNo,
-  pageSize
+    pageNo,
+    pageSize
   }
   return axios.request({
-    url: '/role/getRoleUserList',
+    url: '/appraise/list',
     data,
     method: 'post'
   })
 }
-export const getOtherUsersList = (roleId) => {
+export const appraiseSave = ( data ) => {
   return axios.request({
-    url: '/role/getOtherUsersList',
-    params:{
-      roleId: roleId
+    url: '/appraise/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-产业信息接口 : DomainApi
+export const domainDelete = ( data ) => {
+  return axios.request({
+    url: '/domain/delete?id=' + data,
+    method: 'post'
+  })
+}
+export const domaingetDomainList = (id) => {
+  return axios.request({
+    url: '/domain/getDomainList',
+    params: {
+      id
     },
     method: 'get'
   })
 }
-export const deleteRoleUserRel = (id) => {
+export const domainList = ( data ) => {
   return axios.request({
-    url: '/role/deleteRoleUserRel',
-    params:{
-      relId: id
-    },
-    method: 'get'
+    url: '/domain/list',
+    data,
+    method: 'post'
   })
 }
-export const addRoleUsersRel = ({roleId, userIds}) => {
+export const domainSave = (data) => {
+  return axios.request({
+    url: '/domain/save',
+    data,
+    method: 'post'
+  })
+}
+export const domainUpdateDomain = (data) => {
+  return axios.request({
+    url: '/domain/updateDomain',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-前端用户接口 : PortalUserApi
+export const portalUserDelete = ({
+  pageNo,
+  pageSize
+}) => {
   const data = {
-    roleId, userIds
+    pageNo,
+    pageSize
   }
   return axios.request({
-    url: '/role/addRoleUsersRel',
+    url: '/portalUser/delete',
+    data,
+    method: 'post'
+  })
+}
+export const portalUserList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/portalUser/list',
+    data,
+    method: 'post'
+  })
+}
+export const portalUserSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/portalUser/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-合作信息接口 : CooperateApi
+export const cooperateDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/cooperate/delete',
+    data,
+    method: 'post'
+  })
+}
+export const cooperateList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/cooperate/list',
+    data,
+    method: 'post'
+  })
+}
+export const cooperateSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/cooperate/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-行业门类接口 : IndustryApi
+export const industryDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/industry/delete',
+    data,
+    method: 'post'
+  })
+}
+export const industryGetIndustryList = (id) => {
+  return axios.request({
+    url: '/industry/getIndustryList',
+    params: {
+      id
+    },
+    method: 'get'
+  })
+}
+export const industryList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/industry/list',
+    data,
+    method: 'post'
+  })
+}
+export const industrySave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/industry/save',
+    data,
+    method: 'post'
+  })
+}
+
+// 后台管理-投融资接口 : PartnerApi
+export const partnerDelete = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/partner/delete',
+    data,
+    method: 'post'
+  })
+}
+export const partnerList = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/partner/list',
+    data,
+    method: 'post'
+  })
+}
+export const partnerSave = ({
+  pageNo,
+  pageSize
+}) => {
+  const data = {
+    pageNo,
+    pageSize
+  }
+  return axios.request({
+    url: '/partner/save',
     data,
     method: 'post'
   })

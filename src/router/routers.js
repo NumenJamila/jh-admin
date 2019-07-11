@@ -272,6 +272,87 @@ export default [{
       }
     ]
   },
+  //评价管理
+  {
+    path: '/appraise',
+    name: 'appraise',
+    meta: {
+      icon: 'md-cog',
+      title: '评价管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'appraiseConfig',
+        name: 'appraiseConfig',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '计算配置'
+        },
+        component: () => import('@/view/appraise/appraiseConfig/appraiseConfig.vue')
+      },
+      {
+        path: 'appraiseCompany',
+        name: 'appraiseCompany',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '企业管理'
+        },
+        component: () => import('@/view/appraise/appraiseCompany/appraiseCompany.vue')
+      }
+    ]
+  },
+  //配置管理
+  {
+    path: '/manageConfig',
+    name: 'manageConfig',
+    meta: {
+      icon: 'md-cog',
+      title: '评价管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'industry',
+        name: 'industry',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '行业门类'
+        },
+        component: () => import('@/view/manageConfig/industry/industry.vue')
+      }
+    ]
+  },
+  //资源管理
+  {
+    path: '/resource',
+    name: 'resource',
+    meta: {
+      icon: 'md-cog',
+      title: '评价管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'company',
+        name: 'company',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '企业管理'
+        },
+        component: () => import('@/view/resource/company/company.vue')
+      },
+      {
+        path: 'domain',
+        name: 'domain',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '产业管理'
+        },
+        component: () => import('@/view/resource/domain/domain.vue')
+      }
+    ]
+  },
   // 错误页面
   {
     path: '/error',

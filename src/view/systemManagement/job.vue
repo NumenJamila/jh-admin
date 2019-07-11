@@ -545,9 +545,5 @@ export default {
 .ivu-table-cell {
   padding: 0 5px !important;
 }
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 </style>

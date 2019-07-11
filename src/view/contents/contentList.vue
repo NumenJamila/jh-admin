@@ -300,9 +300,5 @@ export default {
 .colClass {
   text-align: center;
 }
-.loc {
-  position: absolute;
-  right: 17px;
-  top: 26px;
-}
+
 </style>
