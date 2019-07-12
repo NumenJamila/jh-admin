@@ -1,25 +1,21 @@
 <template>
-<div class="slide" id="slide3">
+  <div>
     
-</div>
-
+  </div>
 </template>
 
 <script>
-
 export default {
   name: "contentList",
   data() {
-    return {};
+    return {
+      editPercent: true
+    };
   },
-  mounted() {
-
-    
-  },
+  mounted() {},
   methods: {}
 };
 </script>
 
 <style scoped>
-
 </style>

@@ -68,13 +68,45 @@
           <Button type="primary" size="large" @click="modalOk">确定</Button>
         </div>
       </Modal>
+      <Modal v-model="editPercentModal" width="960" style="overflow: hidden">
+        <p slot="header">
+          <span>修改占比</span>
+          <span class="head-wrapper">
+            <span>占比总和:</span>
+            <span>{{total}}%</span>
+          </span>
+        </p>
+        <Form ref="formPercent" :label-width="80" style="overflow: hidden;padding-top:30px;">
+          <div v-for="(sliderItem,index) in formPercent" :key="index">
+            <Col span="8">
+              <FormItem :label="sliderItem.appraiseName">
+                <Slider v-model="sliderItem.percent" show-input @on-input="sliderInput"></Slider>
+              </FormItem>
+            </Col>
+          </div>
+        </Form>
+        <div slot="footer">
+          <div class="footer-wrapper">
+            <Button type="primary" size="large" @click="toSet(1)">等分比例</Button>
+            <Button type="primary" size="large" @click="toSet(0)">随机比例</Button>
+          </div>
+          <Button type="text" size="large" @click="percentCancel">取消</Button>
+          <Button type="primary" size="large" @click="percentOk">确定</Button>
+        </div>
+      </Modal>
     </Card>
   </div>
 </template>
 
 <script>
 import Tables from "_c/tables";
-import { appraiseList, appraiseDelete, appraiseSave } from "@/api/data";
+import {
+  appraiseList,
+  appraiseDelete,
+  appraiseSave,
+  appraiseGetAppraiseList,
+  appraiseUpdatePercent
+} from "@/api/data";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -105,6 +137,10 @@ export default {
       }
     };
     return {
+      itemLength: 0,
+      total: 0,
+      editPercentModal: false,
+      formPercent: [],
       newModal: false,
       modalTitle: "",
       userId: 0,
@@ -169,7 +205,7 @@ export default {
                   props: {
                     type: "primary",
                     size: "small",
-                    icon: 'md-create'
+                    icon: "md-create"
                   },
                   style: {
                     marginRight: "5px",
@@ -181,11 +217,39 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.editBus(params.row.appraiseNo, params.row.appraiseName, params.row.appraiseUs);
+                      this.editBus(
+                        params.row.appraiseNo,
+                        params.row.appraiseName,
+                        params.row.appraiseUs
+                      );
                     }
                   }
                 },
                 "修改"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small",
+                    icon: "md-create"
+                  },
+                  style: {
+                    marginRight: "5px",
+                    display: !this.jurisdiction[
+                      "systemManagement:userManagement:add"
+                    ]
+                      ? "none"
+                      : "inline-block"
+                  },
+                  on: {
+                    click: () => {
+                      this.editPercent();
+                    }
+                  }
+                },
+                "修改占比"
               ),
               h(
                 "Poptip",
@@ -208,7 +272,7 @@ export default {
                       props: {
                         type: "error",
                         size: "small",
-                        icon: 'ios-trash'
+                        icon: "ios-trash"
                       },
                       style: {
                         // marginRight: '5px'
@@ -231,6 +295,84 @@ export default {
     };
   },
   methods: {
+    //修改占比
+    editPercent() {
+      let that = this;
+      that.total = 0
+      appraiseGetAppraiseList().then(res => {
+        if (res.data.isSuccess) {
+          that.formPercent = res.data.data;
+          for (var value of res.data.data) {
+            that.total += value.percent;
+          }
+          that.itemLength = res.data.data.length;
+          that.editPercentModal = true;
+        } else {
+          this.$Message.error("请求失败:" + res.data.msg);
+        }
+      });
+    },
+    // 计算total占比
+    sliderInput() {
+      let that = this;
+      let tempCount = 0;
+      for (var value of that.formPercent) {
+        tempCount += value.percent;
+      }
+      that.total = tempCount;
+    },
+    toSet(e) {
+      let that = this;
+      if (e === 1) {
+        let base = Math.floor(100 / that.itemLength);
+        console.log(base);
+        let rest = 100 % that.itemLength;
+        console.log(rest);
+        for (let i = 0; i < that.itemLength; i++) {
+          that.formPercent[i].percent = base + (i < rest ? 1 : 0);
+        }
+      } else if (e === 0) {
+        let restPercentArr = that.randAlloc(100, 5, 80, that.itemLength);
+        for (let i = 0; i < that.itemLength; i++) {
+          that.formPercent[i].percent = restPercentArr[i];
+        }
+      } else {
+        console.log("无此分配比例");
+      }
+      // that.sliderInput()
+    },
+    // 随机函数
+    randAlloc(total, min, max, length) {
+      // 首先要判断是否符合 min 和 max 条件
+      if (min * length > total || max * length < total) {
+        throw Error(`没法满足最最少 ${min} 最大 ${max} 的条件`);
+      }
+
+      const result = [];
+      let restValue = total;
+      let restLength = length;
+      for (let i = 0; i < length - 1; i++) {
+        restLength--;
+        // 这一次要发的数量必须保证剩下的要足最小量
+        // 同进要保证剩下的不能大于需要的最大量
+        const restMin = restLength * min;
+        const restMax = restLength * max;
+        // 可发的量
+        const usable = restValue - restMin;
+        // 最少要发的量
+        const minValue = Math.max(min, restValue - restMax);
+        // 以 minValue 为最左，max 为中线来进行随机，即随机范围是 (max - minValue) * 2
+        // 如果这个范围大于 usable - minValue，取 usable - minValue
+        const limit = Math.min(usable - minValue, (max - minValue) * 2);
+        // 随机部分加上最少要发的部分就是应该发的，但是如果大于 max，最大取到 max
+        result[i] = Math.min(max, minValue + Math.floor(limit * Math.random()));
+        restValue -= result[i];
+      }
+      result[length - 1] = restValue;
+
+      return result;
+    },
+
     // 唤起新增评价类别对话框
     newModalFunc() {
       this.modalTitle = "新增评价类别";
@@ -268,6 +410,33 @@ export default {
           this.loading = false;
           this.$Message.error("网络异常");
         });
+    },
+
+    // 确定修改占比
+    percentOk() {
+      let that = this
+      if (that.total===100) {
+        appraiseUpdatePercent(this.formPercent)
+          .then(res => {
+            if (res.data.isSuccess) {
+              this.$Message.info("修改成功");
+              this.editPercentModal = false;
+              this.AppraiseList();
+            } else {
+              this.$Message.error("请求失败:" + res.data.msg);
+            }
+          })
+          .catch(res => {
+            this.$Message.error("网络异常");
+          });
+      } else {
+        that.$Message.error("请确认占比总和为100");
+      }
+    },
+    percentCancel() {
+      let that = this
+      that.editPercentModal = false
+      that.total = 0
     },
     // 新建修改评价类别
     modalOk() {
@@ -374,5 +543,18 @@ export default {
 <style scoped>
 .colClass {
   text-align: center;
+}
+.head-wrapper {
+  float: right;
+  margin-right: 50px;
+}
+.footer-wrapper {
+  float: left;
+}
+.ivu-input-number {
+  width: 40px;
+}
+.ivu-slider-input .ivu-slider-wrap {
+    margin-right: 60px;
 }
 </style>

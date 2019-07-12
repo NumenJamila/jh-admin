@@ -320,6 +320,15 @@ export default [{
           title: '行业门类'
         },
         component: () => import('@/view/manageConfig/industry/industry.vue')
+      },
+      {
+        path: 'enterprise',
+        name: 'enterprise',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '企业标签'
+        },
+        component: () => import('@/view/manageConfig/enterprise/enterprise.vue')
       }
     ]
   },
@@ -350,6 +359,45 @@ export default [{
           title: '产业管理'
         },
         component: () => import('@/view/resource/domain/domain.vue')
+      }
+    ]
+  },
+  //信息管理
+  {
+    path: '/userManage',
+    name: 'userManage',
+    meta: {
+      icon: 'md-cog',
+      title: '信息管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'collectHistory',
+        name: 'collectHistory',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '收藏历史'
+        },
+        component: () => import('@/view/userManage/collectHistory/collectHistory.vue')
+      },
+      {
+        path: 'browseHistory',
+        name: 'browseHistory',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '浏览历史'
+        },
+        component: () => import('@/view/userManage/browseHistory/browseHistory.vue')
+      },
+      {
+        path: 'reUser',
+        name: 'reUser',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '登录用户'
+        },
+        component: () => import('@/view/userManage/reUser/reUser.vue')
       }
     ]
   },

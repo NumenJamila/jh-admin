@@ -59,14 +59,7 @@ export const browseHistoryDelete = ({
     method: 'post'
   })
 }
-export const browseHistoryList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const browseHistoryList = ( data ) => {
   return axios.request({
     url: '/browseHistory/list',
     data,
@@ -103,14 +96,7 @@ export const collectDelete = ({
     method: 'post'
   })
 }
-export const collectList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const collectList = ( data ) => {
   return axios.request({
     url: '/collect/list',
     data,
@@ -227,12 +213,9 @@ export const appraiseDelete = ( data ) => {
     method: 'post'
   })
 }
-export const appraiseGetAppraiseList = (id) => {
+export const appraiseGetAppraiseList = () => {
   return axios.request({
     url: '/appraise/getAppraiseList',
-    params: {
-      id
-    },
     method: 'get'
   })
 }
@@ -253,6 +236,13 @@ export const appraiseList = ({
 export const appraiseSave = ( data ) => {
   return axios.request({
     url: '/appraise/save',
+    data,
+    method: 'post'
+  })
+}
+export const appraiseUpdatePercent = ( data ) => {
+  return axios.request({
+    url: '/appraise/updatePercent',
     data,
     method: 'post'
   })
@@ -297,28 +287,13 @@ export const domainUpdateDomain = (data) => {
 }
 
 // 后台管理-前端用户接口 : PortalUserApi
-export const portalUserDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const portalUserDelete = ( data ) => {
   return axios.request({
-    url: '/portalUser/delete',
-    data,
+    url: '/portalUser/delete?id=' + data,
     method: 'post'
   })
 }
-export const portalUserList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const portalUserList = ( data ) => {
   return axios.request({
     url: '/portalUser/list',
     data,
