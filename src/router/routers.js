@@ -332,6 +332,36 @@ export default [{
       }
     ]
   },
+  //关系管理
+  {
+    path: '/relevance',
+    name: 'relevance',
+    meta: {
+      icon: 'md-cog',
+      title: '评价管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'cooperate',
+        name: 'cooperate',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '行业门类'
+        },
+        component: () => import('@/view/relevance/cooperate/cooperate.vue')
+      },
+      {
+        path: 'financing',
+        name: 'financing',
+        meta: {
+          icon: 'ios-git-compare',
+          title: '企业标签'
+        },
+        component: () => import('@/view/relevance/financing/financing.vue')
+      }
+    ]
+  },
   //资源管理
   {
     path: '/resource',

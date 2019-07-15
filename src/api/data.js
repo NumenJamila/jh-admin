@@ -1,42 +1,20 @@
 import axios from '@/libs/api.request'
 
 // 后台管理-公司标签接口 : TagApi
-export const tagDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const tagDelete = ( data ) => {
   return axios.request({
-    url: '/tag/delete',
-    data,
+    url: '/tag/delete?id=' + data,
     method: 'post'
   })
 }
-export const tagList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const tagList = ( data ) => {
   return axios.request({
     url: '/tag/list',
     data,
     method: 'post'
   })
 }
-export const tagSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const tagSave = ( data ) => {
   return axios.request({
     url: '/tag/save',
     data,
@@ -82,16 +60,9 @@ export const browseHistorySave = ({
 }
 
 // 后台管理-历史收藏接口 : CollectedApi
-export const collectDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const collectDelete = ( data ) => {
   return axios.request({
-    url: '/collect/delete',
+    url: '/collect/delete?id=' + data,
     data,
     method: 'post'
   })
@@ -103,14 +74,7 @@ export const collectList = ( data ) => {
     method: 'post'
   })
 }
-export const collectSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const collectSave = ( data ) => {
   return axios.request({
     url: '/collect/save',
     data,
@@ -119,42 +83,21 @@ export const collectSave = ({
 }
 
 // 后台管理-公司信息接口 : CompanyInfoApi
-export const companyinfoDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyinfoDelete = ( data ) => {
   return axios.request({
-    url: '/companyinfo/delete',
+    url: '/companyinfo/delete?id=' + data,
     data,
     method: 'post'
   })
 }
-export const companyinfoList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyinfoList = ( data ) => {
   return axios.request({
     url: '/companyinfo/list',
     data,
     method: 'post'
   })
 }
-export const companyinfoSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyinfoSave = ( data ) => {
   return axios.request({
     url: '/companyinfo/save',
     data,
@@ -163,42 +106,21 @@ export const companyinfoSave = ({
 }
 
 // 后台管理-公司评价信息接口 : CompanyAppraiseApi
-export const companyAppraiseDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyAppraiseDelete = ( data ) => {
   return axios.request({
-    url: '/companyAppraise/delete',
+    url: '/companyAppraise/delete?id=' + data,
     data,
     method: 'post'
   })
 }
-export const companyAppraiseList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyAppraiseList = ( data ) => {
   return axios.request({
     url: '/companyAppraise/list',
     data,
     method: 'post'
   })
 }
-export const companyAppraiseSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const companyAppraiseSave = ( data ) => {
   return axios.request({
     url: '/companyAppraise/save',
     data,
@@ -316,42 +238,21 @@ export const portalUserSave = ({
 }
 
 // 后台管理-合作信息接口 : CooperateApi
-export const cooperateDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const cooperateDelete = ( data ) => {
   return axios.request({
-    url: '/cooperate/delete',
+    url: '/cooperate/delete?id=' + data,
     data,
     method: 'post'
   })
 }
-export const cooperateList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const cooperateList = ( data ) => {
   return axios.request({
     url: '/cooperate/list',
     data,
     method: 'post'
   })
 }
-export const cooperateSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const cooperateSave = ( data ) => {
   return axios.request({
     url: '/cooperate/save',
     data,
@@ -360,16 +261,9 @@ export const cooperateSave = ({
 }
 
 // 后台管理-行业门类接口 : IndustryApi
-export const industryDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const industryDelete = ( data ) => {
   return axios.request({
-    url: '/industry/delete',
+    url: '/industry/delete?id=' + data,
     data,
     method: 'post'
   })
@@ -383,28 +277,14 @@ export const industryGetIndustryList = (id) => {
     method: 'get'
   })
 }
-export const industryList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const industryList = ( data ) => {
   return axios.request({
     url: '/industry/list',
     data,
     method: 'post'
   })
 }
-export const industrySave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const industrySave = ( data ) => {
   return axios.request({
     url: '/industry/save',
     data,
@@ -413,42 +293,21 @@ export const industrySave = ({
 }
 
 // 后台管理-投融资接口 : PartnerApi
-export const partnerDelete = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const partnerDelete = ( data ) => {
   return axios.request({
-    url: '/partner/delete',
+    url: '/partner/delete?id=' + data,
     data,
     method: 'post'
   })
 }
-export const partnerList = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const partnerList = ( data ) => {
   return axios.request({
     url: '/partner/list',
     data,
     method: 'post'
   })
 }
-export const partnerSave = ({
-  pageNo,
-  pageSize
-}) => {
-  const data = {
-    pageNo,
-    pageSize
-  }
+export const partnerSave = ( data ) => {
   return axios.request({
     url: '/partner/save',
     data,

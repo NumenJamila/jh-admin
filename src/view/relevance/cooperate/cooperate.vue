@@ -71,7 +71,7 @@
 
 <script>
 import Tables from "_c/tables";
-import { tagList, tagSave, tagDelete } from "@/api/data";
+import { cooperateDelete, cooperateList, cooperateSave } from "@/api/data";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -231,13 +231,13 @@ export default {
       this.newModal = true;
     },
     // 删除产业
-    TagDelete(id) {
-      tagDelete(id)
+    CooperateDelete(id) {
+      cooperateDelete(id)
         .then(res => {
           this.loading = false;
           if (res.data.isSuccess) {
             this.$Message.info("已删除产业");
-            this.DomainList();
+            this.CooperateList();
           } else {
             this.$Message.error("请求失败:" + res.data.msg);
           }
@@ -253,12 +253,12 @@ export default {
       this.$refs.formValidate.validate(valid => {
         if (valid) {
           if (this.formItem.domainNo == 0) {
-            tagSave(this.formItem)
+            cooperateSave(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
                   this.$Message.info("添加成功");
                   this.newModal = false;
-                  this.DomainList();
+                  this.CooperateList();
                 } else {
                   this.$Message.error("请求失败:" + res.data.msg);
                 }
@@ -272,7 +272,7 @@ export default {
                 if (res.data.isSuccess) {
                   this.$Message.info("修改成功");
                   this.newModal = false;
-                  this.DomainList();
+                  this.CooperateList();
                 } else {
                   this.$Message.error("请求失败:" + res.data.msg);
                 }
@@ -293,13 +293,13 @@ export default {
       this.newModal = false;
       this.$Message.info("已取消");
     },
-    TagList() {
+    handleSearch() {
       let data = {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
         domainName: this.searchValue.domainName
       };
-      tagList(data)
+      cooperateList(data)
         .then(res => {
           this.loading = false;
           if (res.data.isSuccess) {
@@ -315,20 +315,20 @@ export default {
     },
     setPageSize(pageSize) {
       this.pageSize = pageSize;
-      this.TagList();
+      this.CooperateList();
     },
     // 换页
     changePage(pageNo) {
       this.pageNo = pageNo;
-      this.TagList();
+      this.CooperateList();
     },
-    TagList() {
+    CooperateList() {
       this.loading = true;
       let data = {
         pageNo: this.pageNo,
         pageSize: this.pageSize
       };
-      tagList(data)
+      cooperateList(data)
         .then(res => {
           this.loading = false;
           if (res.data.isSuccess) {
@@ -344,7 +344,7 @@ export default {
     }
   },
   mounted() {
-    this.TagList();
+    this.CooperateList();
   }
 };
 </script>

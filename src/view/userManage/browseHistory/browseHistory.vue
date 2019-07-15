@@ -117,7 +117,7 @@ export default {
           align: "center",
           width: 100
         },
-        { title: "收藏对象", key: "browse", align: "center" },
+        { title: "浏览对象", key: "browse", align: "center" },
         {
           title: "对象类型",
           key: "browseType",
