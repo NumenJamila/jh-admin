@@ -102,7 +102,7 @@ import {
   getOtherUsersList,
   deleteRoleUserRel,
   addRoleUsersRel
-} from "@/api/data";
+} from "@/api/admin";
 import Tables from "_c/tables";
 export default {
   props: ["roleId", "jurisdiction", "roleDialogDisplay", "closeDialog"],

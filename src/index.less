@@ -10,3 +10,17 @@
   right: 17px;
   top: 16px;
 }
+.clearfix:after{
+  /*添加一个内容*/
+  content: "";
+  /*转换一个块元素*/
+  display: block;
+  /*清除两侧浮动*/
+  clear: both;
+}
+/*
+ * 在IE6中不支持after伪类，还需hasLayout解决问题
+ */
+.clearfix{
+  zoom : 1;
+}

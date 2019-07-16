@@ -43,7 +43,7 @@ import {
   deletePermissionData,
   updatePermissionData,
   getPermissionData
-} from '@/api/data'
+} from '@/api/admin'
 import { mapGetters } from 'vuex'
 export default {
   computed: {

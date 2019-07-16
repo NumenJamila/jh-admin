@@ -2,16 +2,6 @@ import axios from 'axios'
 import store from '@/store'
 import router from '../router'
 // import { Spin } from 'iview'
-const addErrorLog = errorInfo => {
-  const { statusText, status, request: { responseURL } } = errorInfo
-  let info = {
-    type: 'ajax',
-    code: status,
-    mes: statusText,
-    url: responseURL
-  }
-  if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
-}
 
 class HttpRequest {
   constructor (publicPath = baseURL) {
@@ -69,16 +59,6 @@ class HttpRequest {
       console.log("响应出错")
       console.log(error)
       this.destroy(url)
-      let errorInfo = error.response
-      if (!errorInfo) {
-        const { request: { statusText, status }, config } = JSON.parse(JSON.stringify(error))
-        errorInfo = {
-          statusText,
-          status,
-          request: { responseURL: config.url }
-        }
-      }
-      addErrorLog(errorInfo)
       return Promise.reject(error)
     })
   }

@@ -104,6 +104,15 @@ export const companyinfoSave = ( data ) => {
     method: 'post'
   })
 }
+export const companyinfoGetDetail = ( companyNo ) => {
+  return axios.request({
+    url: '/companyinfo/getDetail',
+    params: {
+      companyNo
+    },
+    method: 'get'
+  })
+}
 
 // 后台管理-公司评价信息接口 : CompanyAppraiseApi
 export const companyAppraiseDelete = ( data ) => {
