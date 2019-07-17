@@ -93,64 +93,49 @@
           class="clearfix"
         >
           <Col span="12">
-            <FormItem label="企业名称" prop="industryName">
-              <Input v-model="formItem.industryName" placeholder="Enter something..."></Input>
+            <FormItem label="企业名称" prop="companyName">
+              <Input v-model="formItem.companyName" placeholder="Enter something..."></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="地址选择" prop="industryName">
-              <v-distpicker province="广东省" city="广州市" area="海珠区"></v-distpicker>
+            <FormItem label="法人代表" prop="legalRepresentative">
+              <Input v-model="formItem.legalRepresentative" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="企业网站" prop="website">
+              <Input v-model="formItem.website" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="企业简介" prop="companyDesc">
+              <Input v-model="formItem.companyDesc" type="textarea" :rows="3" placeholder="Enter something..."></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="注册时间" prop="industryName">
-              <DatePicker type="date" placeholder="Select date"></DatePicker>
+            <FormItem label="注册资本" prop="capitalType">
+              <Input v-model="formItem.regCapital" placeholder="Enter something..."></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="logo" prop="industryName">
-              <div class="demo-upload-list" v-for="item in uploadList">
-                <template v-if="item.status === 'finished'">
-                  <img :src="item.url" />
-                  <div class="demo-upload-list-cover">
-                    <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                  </div>
-                </template>
-                <template v-else>
-                  <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-                </template>
-              </div>
-              <Upload
-                ref="upload"
-                :show-upload-list="false"
-                :default-file-list="defaultList"
-                :on-success="handleSuccess"
-                :format="['jpg','jpeg','png']"
-                :max-size="2048"
-                :on-format-error="handleFormatError"
-                :on-exceeded-size="handleMaxSize"
-                :before-upload="handleBeforeUpload"
-                type="drag"
-                action="//jsonplaceholder.typicode.com/posts/"
-                style="display: inline-block;width:58px;"
-              >
-                <div style="width: 58px;height:58px;line-height: 58px;">
-                  <Icon type="ios-camera" size="20"></Icon>
-                </div>
-              </Upload>
-              <Modal title="View Image" v-model="visible">
-                <img
-                  :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'"
-                  v-if="visible"
-                  style="width: 100%"
-                />
-              </Modal>
+            <FormItem label="资本类型" prop="capitalType">
+              <Select v-model="formItem.capitalType">
+                <Option
+                  v-for="item in capitalTypeList"
+                  :value="item.value"
+                  :key="item.value"
+                >{{ item.label }}</Option>
+              </Select>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="融资情况" prop="industryName">
-              <Select v-model="finanSituationVal">
+            <FormItem label="经营状态" prop="manageStatus">
+              <Input v-model="formItem.manageStatus" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="融资情况" prop="finanSituation">
+              <Select v-model="formItem.finanSituation">
                 <Option
                   v-for="item in finanSituationList"
                   :value="item.value"
@@ -159,6 +144,120 @@
               </Select>
             </FormItem>
           </Col>
+          <Col span="12">
+            <FormItem label="统一社会信用代码" prop="socialCreditCode">
+              <Input v-model="formItem.socialCreditCode" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="组织机构代码" prop="orgCode">
+              <Input v-model="formItem.orgCode" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="联系电话" prop="contactPhone">
+              <Input v-model="formItem.contactPhone" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="联系邮箱" prop="companyEmail">
+              <Input v-model="formItem.companyEmail" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="公司类型" prop="companyType">
+              <Input v-model="formItem.companyType" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="行业" prop="industry">
+              <Input v-model="formItem.industry" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="重要焦点" prop="importantFocus">
+              <Input v-model="formItem.importantFocus" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="企业标签">
+              <Tag
+                v-for="item in tagList"
+                :key="item"
+                :name="item"
+                closable
+                @on-close="handleClose2"
+              >{{ item }}</Tag>
+              <!-- <Button icon="ios-add" type="dashed" size="small" @click="handleAdd">添加标签</Button> -->
+              <Input v-model="tagTemp" placeholder="回车确定" class="TagInput" @on-enter="handleAdd"></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="注册时间" prop="startTerm">
+              <DatePicker type="date" @on-change="startTermFunc" placeholder="Select date"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="营业期限" prop="endTerm">
+              <DatePicker type="date" @on-change="endTermFunc" placeholder="Select date"></DatePicker>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="人员规模" prop="companyPeopleNum">
+              <Input v-model="formItem.companyPeopleNum" type="number" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="核准日期" prop="approvalDate">
+              <DatePicker type="datetime" @on-change="approvalDateFunc" placeholder="Select date"></DatePicker>
+            </FormItem>
+          </Col>
+          <!-- <Col span="12">
+            <FormItem label="注册地址" prop="regAddress">
+              <v-distpicker :province="formItem.province" :city="formItem.city" :area="formItem.district" @selected="regAddressFunc"></v-distpicker>
+            </FormItem>
+          </Col> -->
+          <Col span="24">
+            <FormItem label="详细地址" prop="addressDetail">
+              <v-distpicker class="inline-block" :province="formItem.province" :city="formItem.city" :area="formItem.district" @selected="addressDetailFunc"></v-distpicker>
+              <Input class="inline-block width200" v-model="formItem.addressDetail" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="经营范围" prop="businessScope">
+              <Input v-model="formItem.businessScope" type="textarea" :rows="3" placeholder="Enter something..."></Input>
+            </FormItem>
+          </Col>
+          <Col span="12">
+            <FormItem label="logo" prop="companyLogo">
+                <div class="demo-upload-list" v-if="formItem.companyLogo">
+                  <img :src="formItem.companyLogo" />
+                  <div class="demo-upload-list-cover">
+                    <Icon type="ios-eye-outline" @click.native="handleView()"></Icon>
+                    <Icon type="ios-trash-outline" @click.native="handleRemove()"></Icon>
+                  </div>
+                </div>
+              <Upload
+                ref="upload"
+                :show-upload-list="false"
+                :on-success="handleSuccess"
+                :format="['jpg','jpeg','png']"
+                :max-size="2048"
+                :on-format-error="handleFormatError"
+                :on-exceeded-size="handleMaxSize"
+                type="drag"
+                :action="uploadUrl"
+                style="display: inline-block;width:58px;"
+              >
+                <div style="width: 58px;height:58px;line-height: 58px;">
+                  <Icon type="ios-camera" size="20"></Icon>
+                </div>
+              </Upload>
+              <Modal title="图片预览" v-model="visible">
+                <img :src="formItem.companyLogo" v-if="visible" style="width: 100%" />
+              </Modal>
+            </FormItem>
+          </Col>         
         </Form>
         <div slot="footer">
           <Button type="text" size="large" @click="modalCancel">取消</Button>
@@ -166,104 +265,6 @@
         </div>
       </Modal>
       <Modal v-model="searchModal" title="高级搜索">
-        <Form :model="searchValue" :label-width="80" style="overflow: hidden">
-          <Col span="12">
-            <FormItem label="企业名称：">
-              <Input
-                clearable
-                placeholder="输入企业名称"
-                class="search-input"
-                v-model="searchValue.companyName"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="行业门类：">
-              <Input
-                clearable
-                placeholder="输入企业名称"
-                class="search-input"
-                v-model="searchValue.industry"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="法定代表：">
-              <Input
-                clearable
-                placeholder="输入法人姓名"
-                class="search-input"
-                v-model="searchValue.legalRepresentative"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="注册日期：">
-              <Input
-                clearable
-                placeholder="输入注册日期"
-                class="search-input"
-                v-model="searchValue.startTerm"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="企业标签：">
-              <Input
-                clearable
-                placeholder="输入企业标签"
-                class="search-input"
-                v-model="searchValue.tagName"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="融资情况：">
-              <Input
-                clearable
-                placeholder="输入融资情况"
-                class="search-input"
-                v-model="searchValue.finanSituation"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="企业类型：">
-              <Input
-                clearable
-                placeholder="输入企业类型"
-                class="search-input"
-                v-model="searchValue.companytype"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="省份编码：">
-              <Input
-                clearable
-                placeholder="输入省份编码"
-                class="search-input"
-                v-model="searchValue.provinceCode"
-              />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="城市编码：">
-              <Input
-                clearable
-                placeholder="输入城市编码"
-                class="search-input"
-                v-model="searchValue.cityCode"
-              />
-            </FormItem>
-          </Col>
-        </Form>
-        <div slot="footer">
-          <Button type="text" size="large" @click="searchCancel">取消</Button>
-          <Button type="primary" size="large" @click="handleSearch">搜索</Button>
-        </div>
-      </Modal>
-      <Modal v-model="companyEdit" title="企业修改">
         <Form :model="searchValue" :label-width="80" style="overflow: hidden">
           <Col span="12">
             <FormItem label="企业名称：">
@@ -371,6 +372,12 @@
               <td colspan="2">{{companyInfo.legalRepresentative}}</td>
             </tr>
             <tr>
+              <td width="144px">企业网站</td>
+              <td colspan="3">
+                <span class>{{companyInfo.website}}</span>
+              </td>
+            </tr>
+            <tr>
               <td width="144px">企业简介</td>
               <td colspan="3">
                 <span class>{{companyInfo.companyDesc}}</span>
@@ -466,6 +473,7 @@ import VDistpicker from "v-distpicker";
 import {
   companyinfoList,
   companyinfoSave,
+  companyinfoUpdate,
   companyinfoDelete,
   companyinfoGetDetail
 } from "@/api/data";
@@ -516,6 +524,17 @@ export default {
       }
     };
     return {
+      uploadUrl: "",
+      capitalTypeList: [
+        {
+          value: "0",
+          label: "人民币"
+        },
+        {
+          value: "1",
+          label: "美元"
+        }
+      ],
       finanSituationList: [
         {
           value: "未融资",
@@ -554,11 +573,12 @@ export default {
           label: "E轮以上"
         }
       ],
+      tagList: [],
+      tagTemp: "",
       finanSituationVal: "",
-      defaultList: [],
+      logoObj: {},
       imgName: "",
       visible: false,
-      uploadList: [],
       companyEdit: false,
       companyDetail: false,
       searchModal: false,
@@ -575,25 +595,19 @@ export default {
         industry: "",
         legalRepresentative: "",
         provinceCode: "",
-        regCapital: 0,
-        sortCondition: "",
+        regCapital: "",
         startTerm: "",
         tagName: ""
       },
       formItem: {
+        companyNo: 0,
         companyLogo: "",
-        regAddress: "",
-        cityCode: "",
+        // regAddress: "",
         companyName: "",
-        companyType: "",
         finanSituation: "",
-        importantFocus: "",
-        industry: "",
         legalRepresentative: "",
         provinceCode: "",
-        regCapital: 0,
-        sortCondition: "",
-        addressDetail: "", // '详细地址',
+        // addressDetail: "", // '详细地址',
         province: "", // '省',
         city: "", // '市',
         district: "", // '区',
@@ -607,7 +621,7 @@ export default {
         approvalDate: "", // '核准日期',
         industry: "", // '所属行业',
         contactPhone: "", // '联系电话',
-        webSite: "", // '公司网站',
+        website: "", // '公司网站',
         businessScope: "", // '经营范围',
         companyType: "", // '企业类型(有限责任公司/..) 有限责任公司..',
         endTerm: "", //'经营结束日期',
@@ -623,10 +637,83 @@ export default {
       },
       companyInfo: {},
       rules: {
-        industryName: [
-          { required: true, validator: isNotEmpty, trigger: "blur" },
-          { min: 2, message: "企业名称不可少于2个字符", trigger: "blur" },
-          { max: 20, message: "企业名称不可超过20个字符", trigger: "blur" }
+        companyLogo: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        // regAddress: [
+        //   { required: true, validator: isNotEmpty, trigger: "blur" }
+        // ],
+        companyName: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        companyType: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        finanSituation: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        industry: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        legalRepresentative: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        addressDetail: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        orgCode: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        socialCreditCode: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        regCapital: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        capitalType: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        approvalDate: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        contactPhone: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        website: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        businessScope: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        companyType: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        endTerm: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        startTerm: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        manageStatus: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        FinanSituation: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        tagName: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ], 
+        companyDesc: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        companyEmail: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        companyPeopleNum: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
+        ],
+        importantFocus: [
+          { required: true, validator: isNotEmpty, trigger: "blur" }
         ]
       },
       pageNo: 1,
@@ -796,18 +883,71 @@ export default {
     };
   },
   methods: {
-    handleView(name) {
-      this.imgName = name;
+    changeStr() {
+
+    },
+    startTermFunc(e) {
+      console.log("成立", e)
+      this.formItem.startTerm = e
+    },
+    endTermFunc(e) {
+      console.log("end", e)
+      this.formItem.endTerm = e
+    },
+    approvalDateFunc(e) {
+      console.log("appr", e)
+      this.formItem.approvalDate = e
+    },
+    // regAddressFunc(e) {
+    //   console.log("reg", e)
+    // },
+    addressDetailFunc(e) {
+      console.log("det", e)
+      this.formItem.province = e.province.value
+      this.formItem.provinceCode = e.province.code
+      this.formItem.city = e.city.value
+      this.formItem.cityCode = e.city.code
+      this.formItem.district = e.area.value
+      this.formItem.districtCode = e.area.code
+    },
+    handleAdd() {
+      // if (this.tagList.length) {
+      //     this.tagList.push(this.tagList[this.tagList.length - 1] + 1);
+      // } else {
+      //     this.count.push(0);
+      // }
+      if (this.tagTemp) {
+        this.tagList.push(this.tagTemp);
+        this.tagTemp = "";
+        if(!this.tagList.length==0) {
+        this.fromItem.tagName = this.tagList.join(",")
+      }
+      }
+    },
+    handleClose2(event, name) {
+      const index = this.tagList.indexOf(name);
+      this.tagList.splice(index, 1);
+    },
+    handleView() {
       this.visible = true;
     },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    handleRemove() {
+      // const fileList = this.$refs.upload.fileList;
+      // this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      this.formItem.companyLogo = ""
     },
     handleSuccess(res, file) {
-      file.url =
-        "https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar";
-      file.name = "7eb99afb9d5f317c912f08b5212fd69a";
+      // file.url =
+      //   "https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar";
+      // file.name = "7eb99afb9d5f317c912f08b5212fd69a";
+      // console.log(res);
+      // console.log(file);
+      // 文件上传回调 上传成功后删除待上传文件
+      if (res.isSuccess) {
+        this.$Message.info("上传成功");
+        this.loadingStatus = false;
+        this.formItem.companyLogo = res.data
+      }
     },
     handleFormatError(file) {
       this.$Notice.warning({
@@ -823,15 +963,6 @@ export default {
         title: "Exceeding file size limit",
         desc: "File  " + file.name + " is too large, no more than 2M."
       });
-    },
-    handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
-      if (!check) {
-        this.$Notice.warning({
-          title: "Up to five pictures can be uploaded."
-        });
-      }
-      return check;
     },
     // 查看详情
     seeDetail(e) {
@@ -857,6 +988,7 @@ export default {
     newModalFunc() {
       this.modalTitle = "新增企业";
       this.formItem = {};
+      this.formItem.companyNo = 0
       this.newModal = true;
     },
     // 唤起修改对话框
@@ -888,9 +1020,13 @@ export default {
     },
     // 新建修改企业
     modalOk() {
+      if(!(this.formItem.province&&this.formItem.city&&this.formItem.district)) {
+        this.$Message.error("请选择地址");
+        return;
+      }
       this.$refs.formValidate.validate(valid => {
         if (valid) {
-          if (this.formItem.industyNo == 0) {
+          if (this.formItem.companyNo == 0) {
             companyinfoSave(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
@@ -924,10 +1060,7 @@ export default {
       });
     },
     modalCancel() {
-      this.formItem = {
-        industyNo: 0,
-        industryName: ""
-      };
+      // this.formItem = {};
       this.newModal = false;
       this.$Message.info("已取消");
     },
@@ -1016,6 +1149,7 @@ export default {
     }
   },
   mounted() {
+    this.uploadUrl = this.$baseApi + "/upload/uploadLogo";
     this.CompanyinfoList();
   }
 };
@@ -1023,6 +1157,18 @@ export default {
 <style lang="less" scoped>
 .colClass {
   text-align: center;
+}
+.inline-block {
+  display: inline-block !important;
+}
+.width200 {
+  margin-left: 16px;
+  width: 200px;
+  vertical-align: top;
+}
+.TagInput {
+  display: inline-block !important;
+  width: 100px;
 }
 table {
   border-spacing: 0;
@@ -1047,9 +1193,49 @@ table {
   font-weight: 400;
   vertical-align: middle;
 }
-.distpicker-address-wrapper select {
-  padding: 4px 7px;
-  line-height: 1.5;
-  height: 32px;
+.demo-upload-list {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin-right: 4px;
+}
+.demo-upload-list img {
+  width: 100%;
+  height: 100%;
+}
+.demo-upload-list-cover {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.demo-upload-list:hover .demo-upload-list-cover {
+  display: block;
+}
+.demo-upload-list-cover i {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 2px;
 }
 </style>
+<style>
+.distpicker-address-wrapper select {
+  padding: 4px 7px !important;
+  line-height: 1.5 !important;
+  height: 32px !important;
+  font-size: 12px;
+}
+</style>
+

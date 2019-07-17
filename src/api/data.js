@@ -104,6 +104,13 @@ export const companyinfoSave = ( data ) => {
     method: 'post'
   })
 }
+export const companyinfoUpdate = ( data ) => {
+  return axios.request({
+    url: '/companyinfo/update',
+    data,
+    method: 'post'
+  })
+}
 export const companyinfoGetDetail = ( companyNo ) => {
   return axios.request({
     url: '/companyinfo/getDetail',
@@ -305,7 +312,6 @@ export const industrySave = ( data ) => {
 export const partnerDelete = ( data ) => {
   return axios.request({
     url: '/partner/delete?id=' + data,
-    data,
     method: 'post'
   })
 }
@@ -319,6 +325,21 @@ export const partnerList = ( data ) => {
 export const partnerSave = ( data ) => {
   return axios.request({
     url: '/partner/save',
+    data,
+    method: 'post'
+  })
+}
+// 后台管理-文件上传 : UploadFileApi
+export const uploadUploadHead = ( data ) => {
+  return axios.request({
+    url: '/upload/uploadHead',
+    data,
+    method: 'post'
+  })
+}
+export const uploadUploadLogo = ( data ) => {
+  return axios.request({
+    url: '/upload/uploadLogo',
     data,
     method: 'post'
   })
