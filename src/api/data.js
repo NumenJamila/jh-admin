@@ -99,7 +99,7 @@ export const companyinfoList = ( data ) => {
 }
 export const companyinfoSave = ( data ) => {
   return axios.request({
-    url: '/companyinfo/save',
+    url: '/companyinfo/saveInfo',
     data,
     method: 'post'
   })

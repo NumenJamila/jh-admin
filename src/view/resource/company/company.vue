@@ -109,11 +109,16 @@
           </Col>
           <Col span="24">
             <FormItem label="企业简介" prop="companyDesc">
-              <Input v-model="formItem.companyDesc" type="textarea" :rows="3" placeholder="Enter something..."></Input>
+              <Input
+                v-model="formItem.companyDesc"
+                type="textarea"
+                :rows="3"
+                placeholder="Enter something..."
+              ></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="注册资本" prop="capitalType">
+            <FormItem label="注册资本" prop="regCapital">
               <Input v-model="formItem.regCapital" placeholder="Enter something..."></Input>
             </FormItem>
           </Col>
@@ -180,7 +185,7 @@
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="企业标签">
+            <FormItem label="企业标签" prop="tagName">
               <Tag
                 v-for="item in tagList"
                 :key="item"
@@ -194,49 +199,92 @@
           </Col>
           <Col span="12">
             <FormItem label="注册时间" prop="startTerm">
-              <DatePicker type="date" @on-change="startTermFunc" placeholder="Select date"></DatePicker>
+              <!-- <DatePicker type="date" @on-change="startTermFunc" placeholder="Select date"></DatePicker> -->
+              <Date-picker
+                placeholder="选择日期"
+                type="datetime"
+                :value="formItem.startTerm"
+                :key="formItem.startTerm"
+                format="yyyy-MM-dd"
+                @on-change="formItem.startTerm=$event"
+              ></Date-picker>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="营业期限" prop="endTerm">
-              <DatePicker type="date" @on-change="endTermFunc" placeholder="Select date"></DatePicker>
+              <!-- <DatePicker type="date" @on-change="endTermFunc" placeholder="Select date"></DatePicker> -->
+              <Date-picker
+                placeholder="选择日期"
+                type="datetime"
+                :value="formItem.endTerm"
+                :key="formItem.endTerm"
+                format="yyyy-MM-dd"
+                @on-change="formItem.endTerm=$event"
+              ></Date-picker>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="人员规模" prop="companyPeopleNum">
-              <Input v-model="formItem.companyPeopleNum" type="number" placeholder="Enter something..."></Input>
+              <Input
+                v-model="formItem.companyPeopleNum"
+                type="number"
+                placeholder="Enter something..."
+              ></Input>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="核准日期" prop="approvalDate">
-              <DatePicker type="datetime" @on-change="approvalDateFunc" placeholder="Select date"></DatePicker>
+              <!-- <DatePicker type="date" @on-change="approvalDateFunc" placeholder="Select date"></DatePicker> -->
+              <Date-picker
+                placeholder="选择日期"
+                type="datetime"
+                :value="formItem.approvalDate"
+                :key="formItem.approvalDate"
+                format="yyyy-MM-dd"
+                @on-change="formItem.approvalDate=$event"
+              ></Date-picker>
             </FormItem>
           </Col>
           <!-- <Col span="12">
             <FormItem label="注册地址" prop="regAddress">
               <v-distpicker :province="formItem.province" :city="formItem.city" :area="formItem.district" @selected="regAddressFunc"></v-distpicker>
             </FormItem>
-          </Col> -->
+          </Col>-->
           <Col span="24">
             <FormItem label="详细地址" prop="addressDetail">
-              <v-distpicker class="inline-block" :province="formItem.province" :city="formItem.city" :area="formItem.district" @selected="addressDetailFunc"></v-distpicker>
-              <Input class="inline-block width200" v-model="formItem.addressDetail" placeholder="Enter something..."></Input>
+              <v-distpicker
+                class="inline-block"
+                :province="formItem.province"
+                :city="formItem.city"
+                :area="formItem.district"
+                @selected="addressDetailFunc"
+              ></v-distpicker>
+              <Input
+                class="inline-block width200"
+                v-model="formItem.addressDetail"
+                placeholder="Enter something..."
+              ></Input>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="经营范围" prop="businessScope">
-              <Input v-model="formItem.businessScope" type="textarea" :rows="3" placeholder="Enter something..."></Input>
+              <Input
+                v-model="formItem.businessScope"
+                type="textarea"
+                :rows="3"
+                placeholder="Enter something..."
+              ></Input>
             </FormItem>
           </Col>
           <Col span="12">
             <FormItem label="logo" prop="companyLogo">
-                <div class="demo-upload-list" v-if="formItem.companyLogo">
-                  <img :src="formItem.companyLogo" />
-                  <div class="demo-upload-list-cover">
-                    <Icon type="ios-eye-outline" @click.native="handleView()"></Icon>
-                    <Icon type="ios-trash-outline" @click.native="handleRemove()"></Icon>
-                  </div>
+              <div class="demo-upload-list" v-show="hasLogo || formItem.companyLogo ">
+                <img :src="formItem.companyLogo" />
+                <div class="demo-upload-list-cover">
+                  <Icon type="ios-eye-outline" @click.native="handleView()"></Icon>
+                  <Icon type="ios-trash-outline" @click.native="handleRemove()"></Icon>
                 </div>
+              </div>
               <Upload
                 ref="upload"
                 :show-upload-list="false"
@@ -257,7 +305,7 @@
                 <img :src="formItem.companyLogo" v-if="visible" style="width: 100%" />
               </Modal>
             </FormItem>
-          </Col>         
+          </Col>
         </Form>
         <div slot="footer">
           <Button type="text" size="large" @click="modalCancel">取消</Button>
@@ -517,7 +565,7 @@ export default {
       }
     };
     let isNotEmpty = (rule, value, callback) => {
-      if (!value || value.replace(/\s*/g, "") === "") {
+      if (!value || value.toString().replace(/\s*/g, "") === "") {
         return callback(new Error("不能为空"));
       } else {
         callback();
@@ -527,11 +575,11 @@ export default {
       uploadUrl: "",
       capitalTypeList: [
         {
-          value: "0",
+          value: 0,
           label: "人民币"
         },
         {
-          value: "1",
+          value: 1,
           label: "美元"
         }
       ],
@@ -573,11 +621,9 @@ export default {
           label: "E轮以上"
         }
       ],
+      hasLogo: false,
       tagList: [],
       tagTemp: "",
-      finanSituationVal: "",
-      logoObj: {},
-      imgName: "",
       visible: false,
       companyEdit: false,
       companyDetail: false,
@@ -600,7 +646,8 @@ export default {
         tagName: ""
       },
       formItem: {
-        companyNo: 0,
+        id: 0,
+        companyNo: "",
         companyLogo: "",
         // regAddress: "",
         companyName: "",
@@ -652,18 +699,14 @@ export default {
         finanSituation: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
-        industry: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ],
+        industry: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
         legalRepresentative: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
         addressDetail: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
-        orgCode: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ],
+        orgCode: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
         socialCreditCode: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
@@ -679,30 +722,22 @@ export default {
         contactPhone: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
-        website: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ],
+        website: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
         businessScope: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
         companyType: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
-        endTerm: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ],
-        startTerm: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ],
+        endTerm: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
+        startTerm: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
         manageStatus: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
         FinanSituation: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
-        tagName: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
-        ], 
+        // tagName: [{ required: true, validator: isNotEmpty, trigger: "blur" }],
         companyDesc: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
@@ -883,33 +918,68 @@ export default {
     };
   },
   methods: {
-    changeStr() {
+    // 时间格式转换
+    // dateFormat: function(date, format) {
+    //   if (typeof date === "string" && date.indexOf("-") > 0) {
+    //     date = date.replace(/-/g, "/");
+    //   }
+    //   if (date === "") {
+    //     return "";
+    //   }
+    //   date = new Date(date);
+    //   var o = {
+    //     "M+": date.getMonth() + 1, // month
+    //     "d+": date.getDate(), // day
+    //     "H+": date.getHours(), // hour
+    //     "m+": date.getMinutes(), // minute
+    //     "s+": date.getSeconds(), // second
+    //     "q+": Math.floor((date.getMonth() + 3) / 3), // quarter
+    //     S: date.getMilliseconds() // millisecond
+    //   };
+    //   if (/(y+)/.test(format))
+    //     format = format.replace(
+    //       RegExp.$1,
+    //       (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+    //     );
+    //   for (var k in o)
+    //     if (new RegExp("(" + k + ")").test(format))
+    //       format = format.replace(
+    //         RegExp.$1,
+    //         RegExp.$1.length == 1
+    //           ? o[k]
+    //           : ("00" + o[k]).substr(("" + o[k]).length)
+    //       );
 
-    },
-    startTermFunc(e) {
-      console.log("成立", e)
-      this.formItem.startTerm = e
-    },
-    endTermFunc(e) {
-      console.log("end", e)
-      this.formItem.endTerm = e
-    },
-    approvalDateFunc(e) {
-      console.log("appr", e)
-      this.formItem.approvalDate = e
-    },
+    //   return format;
+    // },
+    // startTermFunc(e) {
+    //   console.log("成立", e);
+    //   this.formItem.startTerm = this.dateFormat(Date.parse(e), "yyyy-MM-dd");
+    // },
+    // endTermFunc(e) {
+    //   console.log("end", e);
+    //   this.formItem.endTerm = this.dateFormat(Date.parse(e), "yyyy-MM-dd");
+    // },
+    // approvalDateFunc(e) {
+    //   console.log("appr", e);
+    //   this.formItem.approvalDate = this.dateFormat(Date.parse(e), "yyyy-MM-dd");
+    // },
     // regAddressFunc(e) {
     //   console.log("reg", e)
     // },
+
+    // 省市县选择后赋值
     addressDetailFunc(e) {
-      console.log("det", e)
-      this.formItem.province = e.province.value
-      this.formItem.provinceCode = e.province.code
-      this.formItem.city = e.city.value
-      this.formItem.cityCode = e.city.code
-      this.formItem.district = e.area.value
-      this.formItem.districtCode = e.area.code
+      console.log("det", e);
+      this.formItem.province = e.province.value;
+      this.formItem.provinceCode = e.province.code;
+      this.formItem.city = e.city.value;
+      this.formItem.cityCode = e.city.code;
+      this.formItem.district = e.area.value;
+      this.formItem.districtCode = e.area.code;
     },
+
+    // 添加企业标签
     handleAdd() {
       // if (this.tagList.length) {
       //     this.tagList.push(this.tagList[this.tagList.length - 1] + 1);
@@ -919,14 +989,24 @@ export default {
       if (this.tagTemp) {
         this.tagList.push(this.tagTemp);
         this.tagTemp = "";
-        if(!this.tagList.length==0) {
-        this.fromItem.tagName = this.tagList.join(",")
-      }
+        if (this.tagList.length > 0) {
+          this.formItem.tagName = this.tagList.join(",");
+        } else if (this.tagList.length == 0) {
+          this.formItem.tagName = "";
+        }
       }
     },
+
+    // 删除企业标签
     handleClose2(event, name) {
+      console.log();
       const index = this.tagList.indexOf(name);
       this.tagList.splice(index, 1);
+      if (this.tagList.length > 0) {
+        this.formItem.tagName = this.tagList.join(",");
+      } else if (this.tagList.length == 0) {
+        this.formItem.tagName = "";
+      }
     },
     handleView() {
       this.visible = true;
@@ -934,7 +1014,8 @@ export default {
     handleRemove() {
       // const fileList = this.$refs.upload.fileList;
       // this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.companyLogo = ""
+      this.formItem.companyLogo = "";
+      this.hasLogo = false;
     },
     handleSuccess(res, file) {
       // file.url =
@@ -945,24 +1026,21 @@ export default {
       // 文件上传回调 上传成功后删除待上传文件
       if (res.isSuccess) {
         this.$Message.info("上传成功");
-        this.loadingStatus = false;
-        this.formItem.companyLogo = res.data
+        this.formItem.companyLogo = res.data;
+        this.hasLogo = true;
       }
     },
     handleFormatError(file) {
-      this.$Notice.warning({
-        title: "The file format is incorrect",
-        desc:
-          "File format of " +
+      this.$Message.warning(
+        "File format of " +
           file.name +
           " is incorrect, please select jpg or png."
-      });
+      );
     },
     handleMaxSize(file) {
-      this.$Notice.warning({
-        title: "Exceeding file size limit",
-        desc: "File  " + file.name + " is too large, no more than 2M."
-      });
+      this.$Message.warning(
+        "File  " + file.name + " is too large, no more than 2M."
+      );
     },
     // 查看详情
     seeDetail(e) {
@@ -988,17 +1066,29 @@ export default {
     newModalFunc() {
       this.modalTitle = "新增企业";
       this.formItem = {};
-      this.formItem.companyNo = 0
+      this.formItem.id = 0;
+      this.tagList = [];
       this.newModal = true;
     },
     // 唤起修改对话框
     editBus(companyNo) {
       this.modalTitle = "修改企业";
-      this.formItem = {
-        industyNo: industyNo,
-        industryName: industryName
-      };
-      this.newModal = true;
+      companyinfoGetDetail(companyNo)
+        .then(res => {
+          if (res.data.isSuccess) {
+            this.formItem = res.data.data;
+            if (this.formItem.tagName) {
+              this.tagList = this.formItem.tagName.split(",");
+            }
+            this.newModal = true;
+          } else {
+            this.$Message.error("请求失败:" + res.data.msg);
+          }
+        })
+        .catch(err => {
+          this.loading = false;
+          this.$Message.error("网络异常");
+        });
     },
     // 删除企业
     CompanyinfoDelete(id) {
@@ -1020,13 +1110,19 @@ export default {
     },
     // 新建修改企业
     modalOk() {
-      if(!(this.formItem.province&&this.formItem.city&&this.formItem.district)) {
+      if (
+        !(
+          this.formItem.province &&
+          this.formItem.city &&
+          this.formItem.district
+        )
+      ) {
         this.$Message.error("请选择地址");
         return;
       }
       this.$refs.formValidate.validate(valid => {
         if (valid) {
-          if (this.formItem.companyNo == 0) {
+          if (this.formItem.id == 0) {
             companyinfoSave(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
@@ -1041,7 +1137,7 @@ export default {
                 this.$Message.error("网络异常");
               });
           } else {
-            domainUpdateDomain(this.formItem)
+            companyinfoUpdate(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
                   this.$Message.info("修改成功");
