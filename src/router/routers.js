@@ -217,7 +217,7 @@ export default [{
     name: 'relevance',
     meta: {
       icon: 'md-cog',
-      title: '评价管理'
+      title: '关系管理'
     },
     component: Main,
     children: [
@@ -226,7 +226,7 @@ export default [{
         name: 'cooperate',
         meta: {
           icon: 'ios-git-compare',
-          title: '行业门类'
+          title: '合作关系'
         },
         component: () => import('@/view/relevance/cooperate/cooperate.vue')
       },
@@ -235,7 +235,7 @@ export default [{
         name: 'financing',
         meta: {
           icon: 'ios-git-compare',
-          title: '企业标签'
+          title: '投融资'
         },
         component: () => import('@/view/relevance/financing/financing.vue')
       }

@@ -1,13 +1,13 @@
 <template>
   <div>
     <Card>
-      <Form :model="searchValue" :label-width="80">
+      <Form :model="searchValue" :label-width="100">
         <Row>
           <Col span="6">
-            <FormItem label="产业名称：">
+            <FormItem label="合作信息名称：">
               <Input
                 clearable
-                placeholder="输入产业名称"
+                placeholder="输入合作信息名称"
                 class="search-input"
                 v-model="searchValue.domainName"
               />
@@ -52,16 +52,108 @@
         @click="newModalFunc"
         type="primary"
       >
-        <Icon type="search" />新增产业
+        <Icon type="search" />新增合作信息
       </Button>
       <Modal v-model="newModal" :title="modalTitle">
-        <Form :model="formItem" ref="formValidate" :label-width="80" :rules="rules">
-          <FormItem label="产业名称" prop="domainName">
-            <Input v-model="formItem.domainName" placeholder="Enter something..."></Input>
+        <Form :model="formItem" ref="formValidate" :label-width="100" :rules="rules">
+          <FormItem label="合作内容" prop="cooperateContext">
+            <Input v-model="formItem.cooperateContext" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="合作日期" prop="cooperateDate">
+            <Date-picker
+              placeholder="选择日期"
+              type="datetime"
+              :value="formItem.cooperateDate"
+              :key="formItem.cooperateDate"
+              format="yyyy-MM-dd"
+              @on-change="formItem.cooperateDate=$event"
+            ></Date-picker>
+          </FormItem>
+          <FormItem label="合作背景" prop="background">
+            <Input
+              v-model="formItem.background"
+              type="textarea"
+              :rows="3"
+              placeholder="Enter something..."
+            ></Input>
+          </FormItem>
+          <FormItem label="甲方名称" prop="firstPartyName">
+            <Input v-model="formItem.firstPartyName" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="甲方手机" prop="fpMobile">
+            <Input v-model="formItem.fpMobile" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="甲方邮箱" prop="fpEmail">
+            <Input v-model="formItem.fpEmail" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="甲方办公电话" prop="fpOfficePhone">
+            <Input v-model="formItem.fpOfficePhone" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="乙方名称" prop="secondPartyName">
+            <Input v-model="formItem.secondPartyName" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="乙方手机" prop="spMoblie">
+            <Input v-model="formItem.spMoblie" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="乙方邮箱" prop="spEmail">
+            <Input v-model="formItem.spEmail" placeholder="Enter something..."></Input>
+          </FormItem>
+          <FormItem label="乙方办公电话" prop="spOfficePhone">
+            <Input v-model="formItem.spOfficePhone" placeholder="Enter something..."></Input>
           </FormItem>
         </Form>
         <div slot="footer">
           <Button type="text" size="large" @click="modalCancel">取消</Button>
+          <Button type="primary" size="large" @click="next">下一步</Button>
+        </div>
+      </Modal>
+      <Modal v-model="flowModal" title="合作流程" width="1200px" class="clearfix">
+        <div>
+          <Button type="primary" icon="md-add" style="margin-right: 20px;" @click="add"></Button>
+
+          <Button type="primary" icon="ios-trash" @click="deleteItem"></Button>
+
+          <Row v-for="(item,index) in formItem.cooperFlow" :key="index" class="Row-class">
+            <!--Del-->
+            <!-- `checked` 为 true 或 false -->
+            <Checkbox v-model="item.isDelete" size="small" class="check-class"></Checkbox>
+            <!--Parameter-->
+            <Col :span="4">
+              <label :for="item.date">日期：</label>
+              <Date-picker
+                style="width: 80%"
+                placeholder="选择日期"
+                type="datetime"
+                :value="item.date"
+                :key="item.date"
+                format="yyyy-MM-dd HH:mm"
+                @on-change="item.date=$event"
+              ></Date-picker>
+            </Col>
+            <Col :span="4">
+              <label :for="item.flow">事件：</label>
+              <Input placeholder="请输入内容" style="width: 70%" v-model="item.flow" clearable></Input>
+            </Col>
+            <Col :span="4">
+              <label :for="item.department">部门：</label>
+              <Input placeholder="请输入内容" style="width: 70%" v-model="item.department" clearable></Input>
+            </Col>
+            <Col :span="4">
+              <label :for="item.operator">操作员：</label>
+              <Input placeholder="请输入内容" style="width: 70%" v-model="item.operator" clearable></Input>
+            </Col>
+            <Col :span="4">
+              <label :for="item.phone">电话：</label>
+              <Input placeholder="请输入内容" style="width: 70%" v-model="item.phone" clearable></Input>
+            </Col>
+            <Col :span="4">
+              <label :for="item.email">邮箱：</label>
+              <Input placeholder="请输入内容" style="width: 70%" v-model="item.email" clearable></Input>
+            </Col>
+          </Row>
+        </div>
+        <div slot="footer">
+          <Button type="text" size="large" @click="back">返回</Button>
           <Button type="primary" size="large" @click="modalOk">确定</Button>
         </div>
       </Modal>
@@ -71,7 +163,12 @@
 
 <script>
 import Tables from "_c/tables";
-import { cooperateDelete, cooperateList, cooperateSave } from "@/api/data";
+import {
+  cooperateDelete,
+  cooperateList,
+  cooperateSave,
+  cooperateUpdate
+} from "@/api/data";
 import { mapGetters } from "vuex";
 export default {
   computed: {
@@ -79,7 +176,7 @@ export default {
       jurisdiction: "jurisdiction"
     })
   },
-  name: "appraiseConfig",
+  name: "cooperate",
   components: {
     Tables
   },
@@ -102,6 +199,7 @@ export default {
       }
     };
     return {
+      flowModal: false,
       newModal: false,
       modalTitle: "",
       userId: 0,
@@ -110,16 +208,12 @@ export default {
         domainName: ""
       },
       formItem: {
-        domainNo: 0,
-        domainName: ""
+        id: 0,
+        cooperFlow: []
       },
 
       rules: {
-        domainName: [
-          { required: true, validator: isNotEmpty, trigger: "blur" },
-          { min: 2, message: "产业名称不可少于2个字符", trigger: "blur" },
-          { max: 20, message: "产业名称不可超过20个字符", trigger: "blur" }
-        ]
+        domainName: [{ required: true, validator: isNotEmpty, trigger: "blur" }]
       },
       pageNo: 1,
       pageSize: 10,
@@ -131,17 +225,109 @@ export default {
           type: "index",
           key: "index",
           align: "center",
+          fixed: "left",
           width: 60
         },
         {
-          title: "产业名称",
-          key: "domainName",
-          align: "center"
+          title: "合作内容",
+          key: "cooperateContext",
+          align: "center",
+          width: 150
+        },
+        {
+          title: "合作日期",
+          key: "cooperateDate",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "合作背景",
+          key: "background",
+          align: "center",
+          width: 120,
+          ellipsis: true,
+          render: (h, params) => {
+            let texts = ""; //表格列显示文字
+            if (params.row.background !== null) {
+              if (params.row.background.length > 10) {
+                //进行截取列显示字数
+                texts = params.row.background.substring(0, 10) + ".....";
+              } else {
+                texts = params.row.background;
+              }
+            }
+            return h(
+              "Tooltip",
+              {
+                props: { placement: "top", transfer: true }
+              },
+              [
+                texts,
+                h(
+                  "span",
+                  {
+                    slot: "content",
+                    style: { whiteSpace: "normal", wordBreak: "break-all" }
+                  },
+                  params.row.background
+                )
+              ]
+            );
+          }
+        },
+        {
+          title: "甲方名称",
+          key: "firstPartyName",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "甲方手机",
+          key: "fpMobile",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "甲方邮箱",
+          key: "fpEmail",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "甲方办公电话",
+          key: "fpOfficePhone",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "乙方名称",
+          key: "secondPartyName",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "乙方手机",
+          key: "spMoblie",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "乙方邮箱",
+          key: "spEmail",
+          align: "center",
+          width: 120
+        },
+        {
+          title: "乙方办公电话",
+          key: "spOfficePhone",
+          align: "center",
+          width: 120
         },
         {
           title: "操作",
           align: "center",
           key: "action",
+          width: 160,
           render: (h, params) => {
             return h("div", [
               h(
@@ -150,7 +336,7 @@ export default {
                   props: {
                     type: "primary",
                     size: "small",
-                    icon: 'md-create'
+                    icon: "md-create"
                   },
                   style: {
                     marginRight: "5px",
@@ -162,7 +348,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.editBus(params.row.domainNo, params.row.domainName);
+                      this.editBus(params.row);
                     }
                   }
                 },
@@ -178,7 +364,7 @@ export default {
                   },
                   on: {
                     "on-ok": () => {
-                      this.DeleteDomain(params.row.id);
+                      this.CooperateDelete(params.row.id);
                     }
                   }
                 },
@@ -189,7 +375,7 @@ export default {
                       props: {
                         type: "error",
                         size: "small",
-                        icon: 'ios-trash'
+                        icon: "ios-trash"
                       },
                       style: {
                         // marginRight: '5px'
@@ -212,31 +398,59 @@ export default {
     };
   },
   methods: {
+    add() {
+      this.formItem.cooperFlow.push({
+        flow: "",
+        date: "",
+        department: "",
+        operator: "",
+        phone: "",
+        email: "",
+        isDelete: false
+      });
+    },
+    deleteItem() {
+      /*遍历数组，然后根据选中的状态获取对应的下标，然后进行删除*/
+      for (let i = 0; i < this.formItem.cooperFlow.length; i++) {
+        let obj = this.formItem.cooperFlow[i];
+        if (obj.isDelete) {
+          this.formItem.cooperFlow.splice(i, 1);
+          i--;
+        }
+      }
+    },
+    next() {
+      this.newModal = false;
+      this.flowModal = true;
+    },
+    back() {
+      this.newModal = true;
+      this.flowModal = false;
+    },
     // 唤起新增用户对话框
     newModalFunc() {
-      this.modalTitle = "新增产业";
-      this.formItem = {
-        domainNo: 0,
-        domainName: ""
-      };
+      this.modalTitle = "新增合作信息";
+      this.formItem = {};
+      this.formItem.cooperFlow = [];
+      this.formItem.id = 0;
       this.newModal = true;
     },
     // 唤起修改对话框
     editBus(domainNo, domainName) {
-      this.modalTitle = "修改产业";
+      this.modalTitle = "修改合作信息";
       this.formItem = {
         domainNo: domainNo,
         domainName: domainName
       };
       this.newModal = true;
     },
-    // 删除产业
+    // 删除合作信息
     CooperateDelete(id) {
       cooperateDelete(id)
         .then(res => {
           this.loading = false;
           if (res.data.isSuccess) {
-            this.$Message.info("已删除产业");
+            this.$Message.info("已删除合作信息");
             this.CooperateList();
           } else {
             this.$Message.error("请求失败:" + res.data.msg);
@@ -248,11 +462,11 @@ export default {
           this.$Message.error("网络异常");
         });
     },
-    // 新建修改产业
+    // 新建修改合作信息
     modalOk() {
       this.$refs.formValidate.validate(valid => {
         if (valid) {
-          if (this.formItem.domainNo == 0) {
+          if (this.formItem.id == 0) {
             cooperateSave(this.formItem)
               .then(res => {
                 if (res.data.isSuccess) {
@@ -352,5 +566,14 @@ export default {
 <style scoped>
 .colClass {
   text-align: center;
+}
+.Row-class {
+position: relative;
+margin-top: 20px;
+}
+.check-class {
+ position: absolute;
+ right: -2px;
+ top: 6px;
 }
 </style>

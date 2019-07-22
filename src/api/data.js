@@ -270,7 +270,14 @@ export const cooperateList = ( data ) => {
 }
 export const cooperateSave = ( data ) => {
   return axios.request({
-    url: '/cooperate/save',
+    url: '/cooperate/saveCooperate',
+    data,
+    method: 'post'
+  })
+}
+export const cooperateUpdate = ( data ) => {
+  return axios.request({
+    url: '/cooperate/update',
     data,
     method: 'post'
   })

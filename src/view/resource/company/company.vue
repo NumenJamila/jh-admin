@@ -161,7 +161,7 @@
           </Col>
           <Col span="12">
             <FormItem label="联系电话" prop="contactPhone">
-              <Input v-model="formItem.contactPhone" placeholder="Enter something..."></Input>
+              <Input v-model="formItem.contactPhone" type="number" placeholder="Enter something..."></Input>
             </FormItem>
           </Col>
           <Col span="12">
@@ -277,7 +277,7 @@
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="logo" prop="companyLogo">
+            <FormItem label="logo" prop="">
               <div class="demo-upload-list" v-show="hasLogo || formItem.companyLogo ">
                 <img :src="formItem.companyLogo" />
                 <div class="demo-upload-list-cover">
@@ -554,6 +554,18 @@ export default {
     }
   },
   data() {
+    /**
+   * 邮箱校验
+   */
+  let emailValue = (rule, value, callback) => {
+    let temp = /^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,3}$/
+    let tempOne = /^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/
+    if (value && (!(temp).test(value))) {
+      callback(new Error('邮箱格式不符合规范'))
+    } else {
+      callback()
+    }
+  };
     let engAndMunName = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("请输入登录账户名"));
@@ -742,7 +754,8 @@ export default {
           { required: true, validator: isNotEmpty, trigger: "blur" }
         ],
         companyEmail: [
-          { required: true, validator: isNotEmpty, trigger: "blur" }
+          { required: true, validator: isNotEmpty, trigger: "blur" },
+          { required: true, validator: emailValue, trigger: "blur" }
         ],
         companyPeopleNum: [
           { required: true, validator: isNotEmpty, trigger: "blur" }
@@ -884,7 +897,7 @@ export default {
                   },
                   on: {
                     "on-ok": () => {
-                      this.CompanyinfoDelete(params.row.companyNo);
+                      this.CompanyinfoDelete(params.row.id);
                     }
                   }
                 },
